@@ -24,12 +24,11 @@ class MailChimp
             'Accept' => 'application/vnd.api+json',
             'Content-Type' => 'application/vnd.api+json',
             'Authorization' => 'apikey '.$this->apiKey,
-            'User-Agent' => 'Oneup/Contao/MailChimp 1.0 (github.com/1up-lab/contao-mailchimp)',
+            'User-Agent' => '1up/Contao-MailChimp 1.0 (github.com/1up-lab/contao-mailchimp)',
         ];
 
         $this->client = new Client([
-            'base_uri' => $this->apiEndpoint,
-            'headers' => $this->headers,
+            'base_url' => $this->apiEndpoint,
         ]);
     }
 
@@ -38,44 +37,50 @@ class MailChimp
         $args['apikey'] = $this->apiKey;
         $request = null;
 
+        switch ($type) {
+            case 'post':
+                $request = $this->client->createRequest('POST', $uri, [
+                    'json' => $args,
+                    'timeout' => $timeout,
+                    'headers' => $this->headers,
+                ]);
+                break;
+
+            case 'patch':
+                $request = $this->client->createRequest('PATCH', $uri, [
+                    'body' => json_encode($args),
+                    'timeout' => $timeout,
+                    'headers' => $this->headers,
+                ]);
+                break;
+
+            case 'put':
+                $request = $this->client->createRequest('PUT', $uri, [
+                    'query' => $args,
+                    'timeout' => $timeout,
+                    'headers' => $this->headers,
+                ]);
+                break;
+
+            case 'delete':
+                $request = $this->client->createRequest('DELETE', $uri, [
+                    'query' => $args,
+                    'timeout' => $timeout,
+                    'headers' => $this->headers,
+                ]);
+                break;
+
+            case 'get':
+            default:
+                $request = $this->client->createRequest('GET', $uri, [
+                    'query' => $args,
+                    'timeout' => $timeout,
+                    'headers' => $this->headers,
+                ]);
+                break;
+        }
         try {
-            switch ($type) {
-                case 'post':
-                    return $response = $this->client->request('POST', $uri, [
-                        'json' => $args,
-                        'timeout' => $timeout,
-                    ]);
-                    break;
-
-                case 'patch':
-                    return $response = $this->client->request('PATCH', $uri, [
-                        'body' => json_encode($args),
-                        'timeout' => $timeout,
-                    ]);
-                    break;
-
-                case 'put':
-                    return $response = $this->client->request('PUT', $uri, [
-                        'query' => $args,
-                        'timeout' => $timeout,
-                    ]);
-                    break;
-
-                case 'delete':
-                    return $response = $this->client->request('DELETE', $uri, [
-                        'query' => $args,
-                        'timeout' => $timeout,
-                    ]);
-                    break;
-
-                case 'get':
-                default:
-                    return $response = $this->client->request('GET', $uri, [
-                        'query' => $args,
-                        'timeout' => $timeout,
-                    ]);
-                    break;
-            }
+            return $this->client->send($request);
         } catch (RequestException $e) {
             return $e->getResponse();
         }

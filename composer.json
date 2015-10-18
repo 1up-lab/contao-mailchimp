@@ -23,7 +23,7 @@
     "php":">=5.5",
     "contao/core":">=3.2,<3.6-dev",
     "contao-community-alliance/composer-plugin": "*",
-    "guzzlehttp/guzzle": "~6.0"
+    "guzzlehttp/guzzle": "~5.0"
   },
   "require-dev": {
     "phpunit/phpunit": "~4.0"
