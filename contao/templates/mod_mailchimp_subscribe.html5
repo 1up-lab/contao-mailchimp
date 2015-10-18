@@ -1,1 +1,9 @@
-<?php var_dump($this); ?>
+
+<div class="<?= $this->class; ?>" <?php if ($this->cssID): ?>id="<?= $this->cssID; ?>"<?php endif; ?>>
+    <form<?php if ($this->form->action): ?> action="<?= $this->form->action ?>"<?php endif; ?> id="<?= $this->form->formId ?>" method="<?= $this->form->method ?>" enctype="<?= $this->form->enctype ?>"<?= $this->form->attributes ?><?= $this->form->novalidate ?>>
+        <div class="formbody">
+            <?= $this->form->hidden; ?>
+            <?= $this->form->fields; ?>
+        </div>
+    </form>
+</div>

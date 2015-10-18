@@ -8,3 +8,5 @@ $GLOBALS['BE_MOD']['content']['mailchimp'] = [
 $GLOBALS['FE_MOD']['mailchimp'] = [
     'mailchimp_subscribe' => 'Oneup\Contao\MailChimp\Module\ModuleSubscribe',
 ];
+
+$GLOBALS['TL_MODELS']['tl_mailchimp'] = 'Oneup\Contao\MailChimp\Model\MailChimpModel';

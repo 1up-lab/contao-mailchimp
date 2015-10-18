@@ -1,8 +1,8 @@
 <?php
 
-namespace Oneup\Contao\Mailchimp\Model;
+namespace Oneup\Contao\MailChimp\Model;
 
 class MailChimpModel extends \Model
 {
-    protected $strTable = 'tl_mailchimp';
+    protected static $strTable = 'tl_mailchimp';
 }

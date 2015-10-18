@@ -1,6 +1,6 @@
 <?php
 
-namespace Oneup\Contao\Mailchimp;
+namespace Oneup\Contao\MailChimp;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
