@@ -1,0 +1,44 @@
+{
+  "name":"oneup/contao-mailchimp",
+  "description":"This extension connects a Contao installation with MailChimp.",
+  "keywords":["contao", "mailchimp", "email", "marketing", "services"],
+  "type":"contao-module",
+  "homepage":"http://1up.io",
+  "license":"MIT",
+  "authors":[
+    {
+      "name":"David Greminger",
+      "email":"dg@1up.io",
+      "homepage":"http://1up.io",
+      "role":"Developer"
+    }
+  ],
+  "support":{
+    "email":"hello@1up.io",
+    "issues":"https://github.com/1up-lab/contao-mailchimp/issues",
+    "irc":"irc://irc.freenode.org/contao.dev",
+    "source":"https://github.com/1up-lab/contao-mailchimp"
+  },
+  "require":{
+    "php":">=5.4",
+    "contao/core":">=3.2,<3.6-dev",
+    "contao-community-alliance/composer-plugin": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Oneup\\Contao\\": "src"
+    }
+  },
+  "extra": {
+    "contao": {
+      "sources": {
+        "contao": "system/modules/mailchimp"
+      }
+    },
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
+}
