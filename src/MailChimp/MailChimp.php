@@ -24,7 +24,7 @@ class MailChimp
             'Accept' => 'application/vnd.api+json',
             'Content-Type' => 'application/vnd.api+json',
             'Authorization' => 'apikey '.$this->apiKey,
-            'User-Agent' => '1up/Contao-MailChimp 1.0 (github.com/1up-lab/contao-mailchimp)',
+            'User-Agent' => '1up/Contao-MailChimp 1.0 (https://github.com/1up-lab/contao-mailchimp)',
         ];
 
         $this->client = new Client([
