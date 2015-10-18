@@ -15,6 +15,9 @@ vendor/
 composer.lock
 composer.phar
 
+# Tests
+tests/
+phpunit.xml.dist
 # Transifex
 /.tx/
 
