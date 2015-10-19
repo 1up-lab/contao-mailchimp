@@ -27,7 +27,7 @@
                 <target>Mailchimp Einstellungen</target>
             </trans-unit>
             <trans-unit id="tl_mailchimp.new.0">
-                <target>Neue List</target>
+                <target>Neue Liste</target>
             </trans-unit>
             <trans-unit id="tl_mailchimp.new.1">
                 <target>Erstellen Sie eine neue Liste für Ihren MailChimp-Account.</target>
