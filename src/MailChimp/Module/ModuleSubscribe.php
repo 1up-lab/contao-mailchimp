@@ -10,6 +10,8 @@ use Haste\Form\Form;
 class ModuleSubscribe extends \Module
 {
     protected $strTemplate = 'mod_mailchimp_subscribe';
+
+    /** @var MailChimp */
     protected $mailChimp;
     protected $objMailChimp;
     protected $mailChimpListId;
@@ -25,13 +27,15 @@ class ModuleSubscribe extends \Module
 
     protected function compile()
     {
+        global $objPage;
+
         \System::loadLanguageFile('tl_module');
 
         $objForm = new Form('mailchimp-subscribe', 'POST', function(Form $objHaste) {
             return \Input::post('FORM_SUBMIT') === $objHaste->getFormId();
         });
 
-        $objForm->setFormActionFromPageId($this->mailchimpJumpTo);
+        $objForm->setFormActionFromPageId($objPage->id);
 
         $objForm->addFormField('email', [
             'label' => &$GLOBALS['TL_LANG']['tl_module']['mailchimp']['labelEmail'],
@@ -71,7 +75,21 @@ class ModuleSubscribe extends \Module
         if ($objForm->validate()) {
             $arrData = $objForm->fetchAll();
 
-            // form action
+            $mergeVars = [
+                'FNAME' => $arrData['firstname'],
+                'LNAME' => $arrData['lastname'],
+            ];
+
+            $subscribed = $this->mailChimp->subscribeToList(
+                $this->mailChimpListId,
+                $arrData['email'],
+                $mergeVars,
+                (boolean) $this->mailchimpOptin
+            );
+
+            if ($subscribed) {
+                $this->jumpToOrReload($this->mailchimpJumpTo);
+            }
         }
 
         $form = new \stdClass();
