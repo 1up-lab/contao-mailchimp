@@ -38,35 +38,35 @@ class ModuleSubscribe extends \Module
         $objForm->setFormActionFromPageId($objPage->id);
 
         $objForm->addFormField('email', [
-            'label' => &$GLOBALS['TL_LANG']['tl_module']['mailchimp']['labelEmail'],
+            'label' => $GLOBALS['TL_LANG']['tl_module']['mailchimp']['labelEmail'],
             'inputType' => 'text',
             'eval' => [
                 'mandatory' => true,
                 'rgxp' => 'email',
-                'placeholder' => &$GLOBALS['TL_LANG']['tl_module']['mailchimp']['placeholderEmail'],
+                'placeholder' => $GLOBALS['TL_LANG']['tl_module']['mailchimp']['placeholderEmail'],
             ],
         ]);
 
         $objForm->addFormField('firstname', [
-            'label' => &$GLOBALS['TL_LANG']['tl_module']['mailchimp']['labelFirstname'],
+            'label' => $GLOBALS['TL_LANG']['tl_module']['mailchimp']['labelFirstname'],
             'inputType' => 'text',
             'eval' => [
                 'mandatory' => true,
-                'placeholder' => &$GLOBALS['TL_LANG']['tl_module']['mailchimp']['placeholderFirstname'],
+                'placeholder' => $GLOBALS['TL_LANG']['tl_module']['mailchimp']['placeholderFirstname'],
             ],
         ]);
 
         $objForm->addFormField('lastname', [
-            'label' => &$GLOBALS['TL_LANG']['tl_module']['mailchimp']['labelLastname'],
+            'label' => $GLOBALS['TL_LANG']['tl_module']['mailchimp']['labelLastname'],
             'inputType' => 'text',
             'eval' => [
                 'mandatory' => true,
-                'placeholder' => &$GLOBALS['TL_LANG']['tl_module']['mailchimp']['placeholderLastname'],
+                'placeholder' => $GLOBALS['TL_LANG']['tl_module']['mailchimp']['placeholderLastname'],
             ],
         ]);
 
         $objForm->addFormField('submit', [
-            'label' => &$GLOBALS['TL_LANG']['tl_module']['mailchimp']['labelSubmit'],
+            'label' => $GLOBALS['TL_LANG']['tl_module']['mailchimp']['labelSubmit'],
             'inputType' => 'submit'
         ]);
 
@@ -93,7 +93,7 @@ class ModuleSubscribe extends \Module
                 $this->jumpToOrReload($this->mailchimpJumpTo);
             } else {
                 $this->Template->error = true;
-                $this->Template->errorMsg = &$GLOBALS['tl_module']['mailchimp']['subscribeError'];
+                $this->Template->errorMsg = $GLOBALS['tl_module']['mailchimp']['subscribeError'];
             }
         }
 

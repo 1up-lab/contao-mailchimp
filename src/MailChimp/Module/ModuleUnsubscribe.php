@@ -38,17 +38,17 @@ class ModuleUnsubscribe extends \Module
         $objForm->setFormActionFromPageId($objPage->id);
 
         $objForm->addFormField('email', [
-            'label' => &$GLOBALS['TL_LANG']['tl_module']['mailchimp']['labelEmail'],
+            'label' => $GLOBALS['TL_LANG']['tl_module']['mailchimp']['labelEmail'],
             'inputType' => 'text',
             'eval' => [
                 'mandatory' => true,
                 'rgxp' => 'email',
-                'placeholder' => &$GLOBALS['TL_LANG']['tl_module']['mailchimp']['placeholderEmail'],
+                'placeholder' => $GLOBALS['TL_LANG']['tl_module']['mailchimp']['placeholderEmail'],
             ],
         ]);
 
         $objForm->addFormField('submit', [
-            'label' => &$GLOBALS['TL_LANG']['tl_module']['mailchimp']['labelSubmit'],
+            'label' => $GLOBALS['TL_LANG']['tl_module']['mailchimp']['labelSubmit'],
             'inputType' => 'submit'
         ]);
 
@@ -70,7 +70,7 @@ class ModuleUnsubscribe extends \Module
                 $this->jumpToOrReload($this->mailchimpJumpTo);
             } else {
                 $this->Template->error = true;
-                $this->Template->errorMsg = &$GLOBALS['tl_module']['mailchimp']['unsubscribeError'];
+                $this->Template->errorMsg = $GLOBALS['tl_module']['mailchimp']['unsubscribeError'];
             }
         }
 
