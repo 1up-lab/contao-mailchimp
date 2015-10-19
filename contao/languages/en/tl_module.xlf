@@ -50,6 +50,12 @@
             <trans-unit id="tl_module.mailchimp.labelSubmit">
                 <source>Submit</source>
             </trans-unit>
+            <trans-unit id="tl_module.mailchimp.subscribeError">
+                <source>An error occured during the subscription. Are you already subscribed?</source>
+            </trans-unit>
+            <trans-unit id="tl_module.mailchimp.unsubscribeError">
+                <source>An error occured during the unsubscription. Are you already unsubscribed?</source>
+            </trans-unit>
         </body>
     </file>
 </xliff>

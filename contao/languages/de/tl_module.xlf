@@ -50,6 +50,12 @@
             <trans-unit id="tl_module.mailchimp.labelSubmit">
                 <target>Absenden</target>
             </trans-unit>
+            <trans-unit id="tl_module.mailchimp.subscribeError">
+                <target>Es ist ein Fehler bei der Eintragung aufgetreten. Sind Sie bereits eingetragen?</target>
+            </trans-unit>
+            <trans-unit id="tl_module.mailchimp.unsubscribeError">
+                <target>Es ist ein Fehler bei der Austragung aufgetreten. Sind Sie bereits ausgetragen?</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

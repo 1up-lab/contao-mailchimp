@@ -54,6 +54,8 @@ class ModuleUnsubscribe extends \Module
 
         $objForm->addContaoHiddenFields();
 
+        $this->Template->error = false;
+
         if ($objForm->validate()) {
             $arrData = $objForm->fetchAll();
 
@@ -66,6 +68,9 @@ class ModuleUnsubscribe extends \Module
 
             if ($unsubscribed) {
                 $this->jumpToOrReload($this->mailchimpJumpTo);
+            } else {
+                $this->Template->error = true;
+                $this->Template->errorMsg = &$GLOBALS['tl_module']['mailchimp']['unsubscribeError'];
             }
         }
 
