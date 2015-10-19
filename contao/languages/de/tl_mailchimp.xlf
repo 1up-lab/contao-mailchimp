@@ -1,54 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xliff version="1.1">
-    <file datatype="php" original="system/modules/mailchimp/languages/en/tl_mailchimp.php" source-language="en">
+    <file datatype="php" original="system/modules/mailchimp/languages/de/tl_mailchimp.php" source-language="en">
         <body>
             <trans-unit id="tl_mailchimp.listName.0">
-                <source>Listname</source>
+                <target>Name der Liste</target>
             </trans-unit>
             <trans-unit id="tl_mailchimp.listName.1">
-                <source>Please enter name for your list.</source>
+                <target>Bitte geben Sie einen Listennamen ein.</target>
             </trans-unit>
             <trans-unit id="tl_mailchimp.listApiKey.0">
-                <source>List API Key</source>
+                <target>API Key für die Liste</target>
             </trans-unit>
             <trans-unit id="tl_mailchimp.listApiKey.1">
-                <source>Please enter your MailChimp API Key.</source>
+                <target>Bitte geben sie den API Key für die Liste ein.</target>
             </trans-unit>
             <trans-unit id="tl_mailchimp.listId.0">
-                <source>List-ID</source>
+                <target>Listen-ID</target>
             </trans-unit>
             <trans-unit id="tl_mailchimp.listId.1">
-                <source>Please enter the subscriber list id.</source>
+                <target>Bitte geben Sie die Listen-ID an.</target>
             </trans-unit>
             <trans-unit id="tl_mailchimp.list_legend">
-                <source>List details</source>
+                <target>Details Liste</target>
             </trans-unit>
             <trans-unit id="tl_mailchimp.mailchimp_legend">
-                <source>Mailchimp settings.</source>
+                <target>Mailchimp Einstellungen</target>
             </trans-unit>
             <trans-unit id="tl_mailchimp.new.0">
-                <source>New List</source>
+                <target>Neue List</target>
             </trans-unit>
             <trans-unit id="tl_mailchimp.new.1">
-                <source>Create new list from your Mailchimp account.</source>
+                <target>Erstellen Sie eine neue Liste für Ihren MailChimp-Account.</target>
             </trans-unit>
             <trans-unit id="tl_mailchimp.edit.0">
-                <source>Edit List</source>
+                <target>Liste bearbeiten</target>
             </trans-unit>
             <trans-unit id="tl_mailchimp.edit.1">
-                <source>Edit the list.</source>
+                <target>Bearbeiten Sie hier die Liste.</target>
             </trans-unit>
             <trans-unit id="tl_mailchimp.delete.0">
-                <source>Delete list</source>
+                <target>Liste löschen</target>
             </trans-unit>
             <trans-unit id="tl_mailchimp.delete.1">
-                <source>Delete the list.</source>
+                <target>Löschen Sie hier die Liste.</target>
             </trans-unit>
             <trans-unit id="tl_mailchimp.show.0">
-                <source>Show list</source>
+                <target>Liste anzeigen</target>
             </trans-unit>
             <trans-unit id="tl_mailchimp.show.1">
-                <source>Show details from the list.</source>
+                <target>Sehen Sie hier die Listen-Details.</target>
             </trans-unit>
         </body>
     </file>
