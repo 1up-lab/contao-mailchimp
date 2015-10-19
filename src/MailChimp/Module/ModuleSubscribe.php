@@ -5,13 +5,13 @@ namespace Oneup\Contao\MailChimp\Module;
 use Oneup\Contao\MailChimp\Model\MailChimpModel;
 
 use Haste\Form\Form;
-use Oneup\MailChimp\MailChimp;
+use Oneup\MailChimp\Client;
 
 class ModuleSubscribe extends \Module
 {
     protected $strTemplate = 'mod_mailchimp_subscribe';
 
-    /** @var MailChimp */
+    /** @var Client */
     protected $mailChimp;
     protected $objMailChimp;
     protected $mailChimpListId;
@@ -19,7 +19,7 @@ class ModuleSubscribe extends \Module
     public function generate()
     {
         $this->objMailChimp = MailChimpModel::findByPk($this->mailchimpList);
-        $this->mailChimp = new MailChimp($this->objMailChimp->listApiKey);
+        $this->mailChimp = new Client($this->objMailChimp->listApiKey);
         $this->mailChimpListId = $this->objMailChimp->listId;
 
         return parent::generate();
