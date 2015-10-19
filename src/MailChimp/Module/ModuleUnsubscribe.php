@@ -70,7 +70,7 @@ class ModuleUnsubscribe extends \Module
                 $this->jumpToOrReload($this->mailchimpJumpTo);
             } else {
                 $this->Template->error = true;
-                $this->Template->errorMsg = $GLOBALS['tl_module']['mailchimp']['unsubscribeError'];
+                $this->Template->errorMsg = $GLOBALS['TL_LANG']['tl_module']['mailchimp']['unsubscribeError'];
             }
         }
 
