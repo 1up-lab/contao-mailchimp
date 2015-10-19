@@ -24,7 +24,8 @@
     "contao/core":">=3.2,<3.6-dev",
     "contao-community-alliance/composer-plugin": "*",
     "codefog/contao-haste": "~4.0",
-    "guzzlehttp/guzzle": "~5.0"
+    "guzzlehttp/guzzle": "~5.0",
+    "oneup/mailchimp-api-v3": "dev-master"
   },
   "require-dev": {
     "phpunit/phpunit": "~4.0"

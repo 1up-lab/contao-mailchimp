@@ -2,10 +2,10 @@
 
 namespace Oneup\Contao\MailChimp\Module;
 
-use Oneup\Contao\MailChimp\MailChimp;
 use Oneup\Contao\MailChimp\Model\MailChimpModel;
 
 use Haste\Form\Form;
+use Oneup\MailChimp\MailChimp;
 
 class ModuleUnsubscribe extends \Module
 {
