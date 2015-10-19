@@ -17,6 +17,12 @@
             <trans-unit id="FMD.mailchimp_subscribe.1">
                 <source>Subscribe form</source>
             </trans-unit>
+            <trans-unit id="FMD.mailchimp_unsubscribe.0">
+                <source>MailChimp unsubscribe form</source>
+            </trans-unit>
+            <trans-unit id="FMD.mailchimp_unsubscribe.1">
+                <source>Unsubscribe form</source>
+            </trans-unit>
         </body>
     </file>
 </xliff>
