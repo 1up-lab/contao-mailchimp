@@ -55,23 +55,27 @@ class ModuleSubscribe extends \Module
             ],
         ]);
 
-        $objForm->addFormField('firstname', [
-            'label' => $GLOBALS['TL_LANG']['tl_module']['mailchimp']['labelFirstname'],
-            'inputType' => 'text',
-            'eval' => [
-                'mandatory' => true,
-                'placeholder' => $GLOBALS['TL_LANG']['tl_module']['mailchimp']['placeholderFirstname'],
-            ],
-        ]);
+        if (!!$this->mailchimpShowFirstname) {
+            $objForm->addFormField('firstname', [
+                'label' => $GLOBALS['TL_LANG']['tl_module']['mailchimp']['labelFirstname'],
+                'inputType' => 'text',
+                'eval' => [
+                    'mandatory' => true,
+                    'placeholder' => $GLOBALS['TL_LANG']['tl_module']['mailchimp']['placeholderFirstname'],
+                ],
+            ]);
+        }
 
-        $objForm->addFormField('lastname', [
-            'label' => $GLOBALS['TL_LANG']['tl_module']['mailchimp']['labelLastname'],
-            'inputType' => 'text',
-            'eval' => [
-                'mandatory' => true,
-                'placeholder' => $GLOBALS['TL_LANG']['tl_module']['mailchimp']['placeholderLastname'],
-            ],
-        ]);
+        if (!!$this->mailchimpShowLastname) {
+            $objForm->addFormField('lastname', [
+                'label' => $GLOBALS['TL_LANG']['tl_module']['mailchimp']['labelLastname'],
+                'inputType' => 'text',
+                'eval' => [
+                    'mandatory' => true,
+                    'placeholder' => $GLOBALS['TL_LANG']['tl_module']['mailchimp']['placeholderLastname'],
+                ],
+            ]);
+        }
 
         $objForm->addFormField('submit', [
             'label' => $GLOBALS['TL_LANG']['tl_module']['mailchimp']['labelSubmit'],
