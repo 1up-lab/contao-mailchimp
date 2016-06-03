@@ -18,6 +18,14 @@ class ModuleSubscribe extends \Module
 
     public function generate()
     {
+        if (TL_MODE == 'BE') {
+            /** @var \BackendTemplate|object $objTemplate */
+            $objTemplate = new \BackendTemplate('be_wildcard');
+            $objTemplate->wildcard = '### ' . utf8_strtoupper($GLOBALS['TL_LANG']['FMD']['mailchimp_subscribe'][0]) . ' ###';
+
+            return $objTemplate->parse();
+        }
+
         $this->objMailChimp = MailChimpModel::findByPk($this->mailchimpList);
         $this->mailChimp = new Client($this->objMailChimp->listApiKey);
         $this->mailChimpListId = $this->objMailChimp->listId;
