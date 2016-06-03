@@ -89,10 +89,15 @@ class ModuleSubscribe extends \Module
         if ($objForm->validate()) {
             $arrData = $objForm->fetchAll();
 
-            $mergeVars = [
-                'FNAME' => $arrData['firstname'],
-                'LNAME' => $arrData['lastname'],
-            ];
+            $mergeVars = [];
+
+            if ($this->mailchimpShowFirstname) {
+                $mergeVars['FNAME'] = $arrData['firstname'];
+            }
+
+            if ($this->mailchimpShowLastname) {
+                $mergeVars['LNAME'] = $arrData['lastname'];
+            }
 
             $subscribed = $this->mailChimp->subscribeToList(
                 $this->mailChimpListId,
