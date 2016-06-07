@@ -21,7 +21,7 @@
   },
   "require":{
     "php":">=5.5",
-    "contao/core":">=3.2,<3.6-dev",
+    "contao/core":">=3.2,<5.0-dev",
     "contao-community-alliance/composer-plugin": "*",
     "codefog/contao-haste": "~4.0",
     "guzzlehttp/guzzle": "~5.0",
