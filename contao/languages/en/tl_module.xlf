@@ -35,18 +35,6 @@
             <trans-unit id="tl_module.mailchimp.placeholderEmail">
                 <source>E-Mail</source>
             </trans-unit>
-            <trans-unit id="tl_module.mailchimp.labelFirstname">
-                <source>Firstname</source>
-            </trans-unit>
-            <trans-unit id="tl_module.mailchimp.placeholderFirstname">
-                <source>Firstname</source>
-            </trans-unit>
-            <trans-unit id="tl_module.mailchimp.labelLastname">
-                <source>Lastname</source>
-            </trans-unit>
-            <trans-unit id="tl_module.mailchimp.placeholderLastname">
-                <source>Lastname</source>
-            </trans-unit>
             <trans-unit id="tl_module.mailchimp.labelSubmit">
                 <source>Submit</source>
             </trans-unit>

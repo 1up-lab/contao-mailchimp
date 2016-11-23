@@ -4,6 +4,9 @@ $GLOBALS['TL_DCA']['tl_mailchimp'] = [
     'config' => [
         'dataContainer' => 'Table',
         'enableVersioning' => true,
+        'onsubmit_callback' => [
+            ['Oneup\Contao\MailChimp\Model\MailChimpModel', 'saveListFields']
+        ],
         'sql' => [
             'keys' => [
                 'id' => 'primary',
@@ -105,6 +108,10 @@ $GLOBALS['TL_DCA']['tl_mailchimp'] = [
                 'maxlength' => 255
             ],
             'sql' => "varchar(255) NOT NULL default ''",
+        ],
+
+        'fields' => [
+            'sql' => "blob NULL"
         ],
     ],
 ];
