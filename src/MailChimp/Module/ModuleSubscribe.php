@@ -53,26 +53,17 @@ class ModuleSubscribe extends \Module
             ],
         ]);
 
-        if (!!$this->mailchimpShowFirstname) {
-            $objForm->addFormField('firstname', [
-                'label' => $GLOBALS['TL_LANG']['tl_module']['mailchimp']['labelFirstname'],
-                'inputType' => 'text',
-                'eval' => [
-                    'mandatory' => true,
-                    'placeholder' => $GLOBALS['TL_LANG']['tl_module']['mailchimp']['placeholderFirstname'],
-                ],
-            ]);
-        }
+        $fields = json_decode($this->objMailChimp->fields);
+        $mergeVarTags = [];
 
-        if (!!$this->mailchimpShowLastname) {
-            $objForm->addFormField('lastname', [
-                'label' => $GLOBALS['TL_LANG']['tl_module']['mailchimp']['labelLastname'],
-                'inputType' => 'text',
-                'eval' => [
-                    'mandatory' => true,
-                    'placeholder' => $GLOBALS['TL_LANG']['tl_module']['mailchimp']['placeholderLastname'],
-                ],
-            ]);
+        if (is_array($fields)) {
+            foreach ($fields as $field) {
+                $addedName = $this->addFieldToForm($field, $objForm);
+
+                if (null !== $addedName) {
+                    $mergeVarTags[] = $addedName;
+                }
+            }
         }
 
         $objForm->addFormField('submit', [
@@ -88,13 +79,8 @@ class ModuleSubscribe extends \Module
             $arrData = $objForm->fetchAll();
 
             $mergeVars = [];
-
-            if ($this->mailchimpShowFirstname) {
-                $mergeVars['FNAME'] = $arrData['firstname'];
-            }
-
-            if ($this->mailchimpShowLastname) {
-                $mergeVars['LNAME'] = $arrData['lastname'];
+            foreach ($mergeVarTags as $tag) {
+                $mergeVars[$tag] = $arrData[$tag];
             }
 
             $subscribed = $this->mailChimp->subscribeToList(
@@ -116,5 +102,97 @@ class ModuleSubscribe extends \Module
         $objForm->addToObject($form);
 
         $this->Template->form = $form;
+    }
+
+    /**
+     * Return the name of the field.
+     *
+     * @param $field
+     * @param Form $form
+     * @return mixed
+     */
+    protected function addFieldToForm($field, Form $form)
+    {
+        if (!in_array($field->type, ['text', 'number', 'website', 'address', 'dropdown', 'radio', 'url', 'date', 'birthday', 'phone'])) {
+            return null;
+        }
+
+        switch ($field->type) {
+            case 'text':
+            case 'address':
+            case 'date':
+            case 'birthday':
+            case 'phone':
+
+                $eval = [
+                    'mandatory' => $field->required,
+                    'placeholder' => $field->name
+                ];
+
+                if (($maxLength = (int) $field->options->size) > 0) {
+                    $eval['maxlength'] = $maxLength;
+                }
+
+                $form->addFormField($field->tag, [
+                    'label' => $field->name,
+                    'inputType' => 'text',
+                    'eval' => $eval
+                ]);
+
+                break;
+
+            case 'dropdown':
+                $form->addFormField($field->tag, [
+                    'label' => $field->name,
+                    'inputType' => 'select',
+                    'options' => $field->options->choices,
+                    'eval' => [
+                        'required' => $field->required
+                    ]
+                ]);
+
+                break;
+
+
+            case 'radio':
+                $form->addFormField($field->tag, [
+                    'label' => $field->name,
+                    'inputType' => 'radio',
+                    'options' => $field->options->choices,
+                    'eval' => [
+                        'required' => $field->required
+                    ]
+                ]);
+
+                break;
+
+            case 'number':
+                $form->addFormField($field->tag, [
+                    'label' => $field->name,
+                    'inputType' => 'text',
+                    'eval' => [
+                        'rgxp' => 'digit',
+                        'mandatory' => $field->required,
+                        'placeholder' => $field->name
+                    ],
+                ]);
+
+                break;
+
+            case 'url':
+                $form->addFormField($field->tag, [
+                    'label' => $field->name,
+                    'inputType' => 'text',
+                    'eval' => [
+                        'rgxp' => 'url',
+                        'mandatory' => $field->required,
+                        'placeholder' => $field->name
+                    ],
+                ]);
+
+                break;
+        }
+
+        return $field->tag;
     }
 }
