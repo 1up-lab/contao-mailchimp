@@ -35,15 +35,13 @@ class ModuleUnsubscribe extends \Module
 
     protected function compile()
     {
-        global $objPage;
-
         \System::loadLanguageFile('tl_module');
 
         $objForm = new Form('mailchimp-subscribe-'.$this->id, 'POST', function(Form $objHaste) {
             return \Input::post('FORM_SUBMIT') === $objHaste->getFormId();
         });
 
-        $objForm->setFormActionFromPageId($objPage->id);
+        $objForm->setFormActionFromUri(\Environment::get('request'));
 
         $objForm->addFormField('email', [
             'label' => $GLOBALS['TL_LANG']['tl_module']['mailchimp']['labelEmail'],
