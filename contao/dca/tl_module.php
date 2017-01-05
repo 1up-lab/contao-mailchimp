@@ -58,5 +58,5 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['mailchimpShowPlaceholder'] = [
         'mandatory' => false,
         'isBoolean' => true,
     ],
-    'sql' => "varchar(1) NOT NULL default ''",
+    'sql' => "varchar(1) NOT NULL default '1'",
 ];
