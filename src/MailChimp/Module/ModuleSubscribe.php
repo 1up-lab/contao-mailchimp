@@ -4,10 +4,13 @@ namespace Oneup\Contao\MailChimp\Module;
 
 use Oneup\Contao\MailChimp\Model\MailChimpModel;
 
+use Contao\Module;
+use Contao\System;
+use Contao\Environment;
 use Haste\Form\Form;
 use Oneup\MailChimp\Client;
 
-class ModuleSubscribe extends \Module
+class ModuleSubscribe extends Module
 {
     protected $strTemplate = 'mod_mailchimp_subscribe';
 
@@ -35,13 +38,13 @@ class ModuleSubscribe extends \Module
 
     protected function compile()
     {
-        \System::loadLanguageFile('tl_module');
+        System::loadLanguageFile('tl_module');
 
         $objForm = new Form('mailchimp-subscribe', 'POST', function(Form $objHaste) {
             return \Input::post('FORM_SUBMIT') === $objHaste->getFormId();
         });
 
-        $objForm->setFormActionFromUri(\Environment::get('request'));
+        $objForm->setFormActionFromUri(Environment::get('request'));
 
         $objForm->addFormField('email', [
             'label' => $GLOBALS['TL_LANG']['tl_module']['mailchimp']['labelEmail'],
@@ -79,6 +82,7 @@ class ModuleSubscribe extends \Module
             $arrData = $objForm->fetchAll();
 
             $mergeVars = [];
+
             foreach ($mergeVarTags as $tag) {
                 $mergeVars[$tag] = $arrData[$tag];
             }
