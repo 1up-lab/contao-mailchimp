@@ -29,23 +29,17 @@
             <trans-unit id="tl_module.mailchimpOptin.1">
                 <source>Use double opt-in for subscription.</source>
             </trans-unit>
+            <trans-unit id="tl_module.mailchimpShowPlaceholder.0">
+                <source>Show HTML5-Placeholder</source>
+            </trans-unit>
+            <trans-unit id="tl_module.mailchimpShowPlaceholder.1">
+                <source>Show HTML5-Placeholder in form fields.</source>
+            </trans-unit>
             <trans-unit id="tl_module.mailchimp.labelEmail">
                 <source>E-Mail</source>
             </trans-unit>
             <trans-unit id="tl_module.mailchimp.placeholderEmail">
                 <source>E-Mail</source>
-            </trans-unit>
-            <trans-unit id="tl_module.mailchimp.labelFirstname">
-                <source>Firstname</source>
-            </trans-unit>
-            <trans-unit id="tl_module.mailchimp.placeholderFirstname">
-                <source>Firstname</source>
-            </trans-unit>
-            <trans-unit id="tl_module.mailchimp.labelLastname">
-                <source>Lastname</source>
-            </trans-unit>
-            <trans-unit id="tl_module.mailchimp.placeholderLastname">
-                <source>Lastname</source>
             </trans-unit>
             <trans-unit id="tl_module.mailchimp.labelSubmit">
                 <source>Submit</source>

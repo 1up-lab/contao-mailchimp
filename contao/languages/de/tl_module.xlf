@@ -27,37 +27,19 @@
                 <target>Double Opt-in verwenden</target>
             </trans-unit>
             <trans-unit id="tl_module.mailchimpOptin.1">
-                <target>Double Opt-in (Bestätigungsmail) für Eintragungen verwenden</target>
+                <target>Double Opt-in (Bestätigungsmail) für Eintragungen verwenden.</target>
             </trans-unit>
-            <trans-unit id="tl_module.mailchimpShowFirstname.0">
-                <target>Feld Vorname anzeigen</target>
+            <trans-unit id="tl_module.mailchimpShowPlaceholder.0">
+                <target>HTML5-Placeholder anzeigen</target>
             </trans-unit>
-            <trans-unit id="tl_module.mailchimpShowFirstname.1">
-                <target>Zeigt das Feld Vorname im Formular an.</target>
-            </trans-unit>
-            <trans-unit id="tl_module.mailchimpShowLastname.0">
-                <target>Feld Nachname anzeigen</target>
-            </trans-unit>
-            <trans-unit id="tl_module.mailchimpShowLastname.1">
-                <target>Zeigt das Feld Nachname im Formular an.</target>
+            <trans-unit id="tl_module.mailchimpShowPlaceholder.1">
+                <target>HTML5-Placeholder in Form-Feldern anzeigen.</target>
             </trans-unit>
             <trans-unit id="tl_module.mailchimp.labelEmail">
                 <target>E-Mail</target>
             </trans-unit>
             <trans-unit id="tl_module.mailchimp.placeholderEmail">
                 <target>E-Mail</target>
-            </trans-unit>
-            <trans-unit id="tl_module.mailchimp.labelFirstname">
-                <target>Vorname</target>
-            </trans-unit>
-            <trans-unit id="tl_module.mailchimp.placeholderFirstname">
-                <target>Vorname</target>
-            </trans-unit>
-            <trans-unit id="tl_module.mailchimp.labelLastname">
-                <target>Nachname</target>
-            </trans-unit>
-            <trans-unit id="tl_module.mailchimp.placeholderLastname">
-                <target>Nachname</target>
             </trans-unit>
             <trans-unit id="tl_module.mailchimp.labelSubmit">
                 <target>Absenden</target>

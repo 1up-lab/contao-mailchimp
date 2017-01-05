@@ -2,12 +2,16 @@
 
 namespace Oneup\Contao\MailChimp\Module;
 
+use Contao\Module;
+use Contao\BackendTemplate;
+use Contao\System;
+use Contao\Input;
+use Contao\Environment;
 use Oneup\Contao\MailChimp\Model\MailChimpModel;
-
 use Haste\Form\Form;
 use Oneup\MailChimp\Client;
 
-class ModuleUnsubscribe extends \Module
+class ModuleUnsubscribe extends Module
 {
     protected $strTemplate = 'mod_mailchimp_unsubscribe';
 
@@ -19,8 +23,8 @@ class ModuleUnsubscribe extends \Module
     public function generate()
     {
         if (TL_MODE == 'BE') {
-            /** @var \BackendTemplate|object $objTemplate */
-            $objTemplate = new \BackendTemplate('be_wildcard');
+            /** @var BackendTemplate|object $objTemplate */
+            $objTemplate = new BackendTemplate('be_wildcard');
             $objTemplate->wildcard = '### ' . utf8_strtoupper($GLOBALS['TL_LANG']['FMD']['mailchimp_unsubscribe'][0]) . ' ###';
 
             return $objTemplate->parse();
@@ -35,22 +39,27 @@ class ModuleUnsubscribe extends \Module
 
     protected function compile()
     {
-        \System::loadLanguageFile('tl_module');
+        System::loadLanguageFile('tl_module');
 
         $objForm = new Form('mailchimp-subscribe-'.$this->id, 'POST', function(Form $objHaste) {
-            return \Input::post('FORM_SUBMIT') === $objHaste->getFormId();
+            return Input::post('FORM_SUBMIT') === $objHaste->getFormId();
         });
 
-        $objForm->setFormActionFromUri(\Environment::get('request'));
+        $objForm->setFormActionFromUri(Environment::get('request'));
+
+        $eval = [
+            'mandatory' => true,
+            'rgxp' => 'email',
+        ];
+
+        if ((int) $this->mailchimpShowPlaceholder) {
+            $eval['placeholder'] = $GLOBALS['TL_LANG']['tl_module']['mailchimp']['placeholderEmail'];
+        }
 
         $objForm->addFormField('email', [
             'label' => $GLOBALS['TL_LANG']['tl_module']['mailchimp']['labelEmail'],
             'inputType' => 'text',
-            'eval' => [
-                'mandatory' => true,
-                'rgxp' => 'email',
-                'placeholder' => $GLOBALS['TL_LANG']['tl_module']['mailchimp']['placeholderEmail'],
-            ],
+            'eval' => $eval,
         ]);
 
         $objForm->addFormField('submit', [

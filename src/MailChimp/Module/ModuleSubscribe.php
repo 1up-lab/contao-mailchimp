@@ -4,10 +4,15 @@ namespace Oneup\Contao\MailChimp\Module;
 
 use Oneup\Contao\MailChimp\Model\MailChimpModel;
 
+use Contao\Module;
+use Contao\System;
+use Contao\Environment;
+use Contao\Input;
+use Contao\BackendTemplate;
 use Haste\Form\Form;
 use Oneup\MailChimp\Client;
 
-class ModuleSubscribe extends \Module
+class ModuleSubscribe extends Module
 {
     protected $strTemplate = 'mod_mailchimp_subscribe';
 
@@ -19,8 +24,8 @@ class ModuleSubscribe extends \Module
     public function generate()
     {
         if (TL_MODE == 'BE') {
-            /** @var \BackendTemplate|object $objTemplate */
-            $objTemplate = new \BackendTemplate('be_wildcard');
+            /** @var BackendTemplate|object $objTemplate */
+            $objTemplate = new BackendTemplate('be_wildcard');
             $objTemplate->wildcard = '### ' . utf8_strtoupper($GLOBALS['TL_LANG']['FMD']['mailchimp_subscribe'][0]) . ' ###';
 
             return $objTemplate->parse();
@@ -35,44 +40,40 @@ class ModuleSubscribe extends \Module
 
     protected function compile()
     {
-        \System::loadLanguageFile('tl_module');
+        System::loadLanguageFile('tl_module');
 
         $objForm = new Form('mailchimp-subscribe', 'POST', function(Form $objHaste) {
-            return \Input::post('FORM_SUBMIT') === $objHaste->getFormId();
+            return Input::post('FORM_SUBMIT') === $objHaste->getFormId();
         });
 
-        $objForm->setFormActionFromUri(\Environment::get('request'));
+        $objForm->setFormActionFromUri(Environment::get('request'));
+
+        $eval = [
+            'mandatory' => true,
+            'rgxp' => 'email',
+        ];
+
+        if ((int) $this->mailchimpShowPlaceholder) {
+            $eval['placeholder'] = $GLOBALS['TL_LANG']['tl_module']['mailchimp']['placeholderEmail'];
+        }
 
         $objForm->addFormField('email', [
             'label' => $GLOBALS['TL_LANG']['tl_module']['mailchimp']['labelEmail'],
             'inputType' => 'text',
-            'eval' => [
-                'mandatory' => true,
-                'rgxp' => 'email',
-                'placeholder' => $GLOBALS['TL_LANG']['tl_module']['mailchimp']['placeholderEmail'],
-            ],
+            'eval' => $eval,
         ]);
 
-        if (!!$this->mailchimpShowFirstname) {
-            $objForm->addFormField('firstname', [
-                'label' => $GLOBALS['TL_LANG']['tl_module']['mailchimp']['labelFirstname'],
-                'inputType' => 'text',
-                'eval' => [
-                    'mandatory' => true,
-                    'placeholder' => $GLOBALS['TL_LANG']['tl_module']['mailchimp']['placeholderFirstname'],
-                ],
-            ]);
-        }
+        $fields = json_decode($this->objMailChimp->fields);
+        $mergeVarTags = [];
 
-        if (!!$this->mailchimpShowLastname) {
-            $objForm->addFormField('lastname', [
-                'label' => $GLOBALS['TL_LANG']['tl_module']['mailchimp']['labelLastname'],
-                'inputType' => 'text',
-                'eval' => [
-                    'mandatory' => true,
-                    'placeholder' => $GLOBALS['TL_LANG']['tl_module']['mailchimp']['placeholderLastname'],
-                ],
-            ]);
+        if (is_array($fields)) {
+            foreach ($fields as $field) {
+                $addedName = $this->addFieldToForm($field, $objForm);
+
+                if (null !== $addedName) {
+                    $mergeVarTags[] = $addedName;
+                }
+            }
         }
 
         $objForm->addFormField('submit', [
@@ -89,12 +90,8 @@ class ModuleSubscribe extends \Module
 
             $mergeVars = [];
 
-            if ($this->mailchimpShowFirstname) {
-                $mergeVars['FNAME'] = $arrData['firstname'];
-            }
-
-            if ($this->mailchimpShowLastname) {
-                $mergeVars['LNAME'] = $arrData['lastname'];
+            foreach ($mergeVarTags as $tag) {
+                $mergeVars[$tag] = $arrData[$tag];
             }
 
             $subscribed = $this->mailChimp->subscribeToList(
@@ -116,5 +113,110 @@ class ModuleSubscribe extends \Module
         $objForm->addToObject($form);
 
         $this->Template->form = $form;
+    }
+
+    /**
+     * Return the name of the field.
+     *
+     * @param $field
+     * @param Form $form
+     * @return mixed
+     */
+    protected function addFieldToForm($field, Form $form)
+    {
+        if (!in_array($field->type, ['text', 'number', 'website', 'address', 'dropdown', 'radio', 'url', 'date', 'birthday', 'phone'])) {
+            return null;
+        }
+
+        switch ($field->type) {
+            case 'text':
+            case 'address':
+            case 'date':
+            case 'birthday':
+            case 'phone':
+
+                $eval = [
+                    'mandatory' => $field->required,
+                ];
+
+                if (($maxLength = (int) $field->options->size) > 0) {
+                    $eval['maxlength'] = $maxLength;
+                }
+
+                if ((int) $this->mailchimpShowPlaceholder) {
+                    $eval['placeholder'] = $field->name;
+                }
+
+                $form->addFormField($field->tag, [
+                    'label' => $field->name,
+                    'inputType' => 'text',
+                    'eval' => $eval
+                ]);
+
+                break;
+
+            case 'dropdown':
+                $form->addFormField($field->tag, [
+                    'label' => $field->name,
+                    'inputType' => 'select',
+                    'options' => $field->options->choices,
+                    'eval' => [
+                        'required' => $field->required
+                    ]
+                ]);
+
+                break;
+
+
+            case 'radio':
+                $form->addFormField($field->tag, [
+                    'label' => $field->name,
+                    'inputType' => 'radio',
+                    'options' => $field->options->choices,
+                    'eval' => [
+                        'required' => $field->required
+                    ]
+                ]);
+
+                break;
+
+            case 'number':
+                $eval = [
+                    'rgxp' => 'digit',
+                    'mandatory' => $field->required,
+                ];
+
+                if ((int) $this->mailchimpShowPlaceholder) {
+                    $eval['placeholder'] = $field->name;
+                }
+
+                $form->addFormField($field->tag, [
+                    'label' => $field->name,
+                    'inputType' => 'text',
+                    'eval' => $eval,
+                ]);
+
+                break;
+
+            case 'url':
+                $eval = [
+                    'rgxp' => 'url',
+                    'mandatory' => $field->required,
+                ];
+
+                if ((int) $this->mailchimpShowPlaceholder) {
+                    $eval['placeholder'] = $field->name;
+                }
+
+                $form->addFormField($field->tag, [
+                    'label' => $field->name,
+                    'inputType' => 'text',
+                    'eval' => $eval,
+                ]);
+
+                break;
+        }
+
+        return $field->tag;
     }
 }
