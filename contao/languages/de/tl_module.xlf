@@ -29,6 +29,12 @@
             <trans-unit id="tl_module.mailchimpOptin.1">
                 <target>Double Opt-in (Bestätigungsmail) für Eintragungen verwenden</target>
             </trans-unit>
+            <trans-unit id="tl_module.mailchimpShowPlaceholder.0">
+                <target>HTML5-Placeholder anzeigen</target>
+            </trans-unit>
+            <trans-unit id="tl_module.mailchimpShowPlaceholder.1">
+                <target>HTML5-Placeholder in Form-Feldern anzeigen (werden über MailChimp verwaltet).</target>
+            </trans-unit>
             <trans-unit id="tl_module.mailchimp.labelEmail">
                 <target>E-Mail</target>
             </trans-unit>
