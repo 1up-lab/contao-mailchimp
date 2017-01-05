@@ -44,9 +44,6 @@
       "sources": {
         "contao": "system/modules/mailchimp"
       }
-    },
-    "branch-alias": {
-      "dev-master": "1.0.x-dev"
     }
   },
   "minimum-stability": "dev",
