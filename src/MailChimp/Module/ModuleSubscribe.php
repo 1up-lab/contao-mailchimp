@@ -3,7 +3,6 @@
 namespace Oneup\Contao\MailChimp\Module;
 
 use Oneup\Contao\MailChimp\Model\MailChimpModel;
-
 use Contao\Module;
 use Contao\System;
 use Contao\Environment;
@@ -26,7 +25,7 @@ class ModuleSubscribe extends Module
         if (TL_MODE == 'BE') {
             /** @var BackendTemplate|object $objTemplate */
             $objTemplate = new BackendTemplate('be_wildcard');
-            $objTemplate->wildcard = '### ' . utf8_strtoupper($GLOBALS['TL_LANG']['FMD']['mailchimp_subscribe'][0]) . ' ###';
+            $objTemplate->wildcard = '### '.utf8_strtoupper($GLOBALS['TL_LANG']['FMD']['mailchimp_subscribe'][0]).' ###';
 
             return $objTemplate->parse();
         }
@@ -42,7 +41,7 @@ class ModuleSubscribe extends Module
     {
         System::loadLanguageFile('tl_module');
 
-        $objForm = new Form('mailchimp-subscribe', 'POST', function(Form $objHaste) {
+        $objForm = new Form('mailchimp-subscribe', 'POST', function (Form $objHaste) {
             return Input::post('FORM_SUBMIT') === $objHaste->getFormId();
         });
 
@@ -119,7 +118,7 @@ class ModuleSubscribe extends Module
      * Return the name of the field.
      *
      * @param $field
-     * @param Form $form
+     * @param  Form  $form
      * @return mixed
      */
     protected function addFieldToForm($field, Form $form)
@@ -161,12 +160,11 @@ class ModuleSubscribe extends Module
                     'inputType' => 'select',
                     'options' => $field->options->choices,
                     'eval' => [
-                        'required' => $field->required
+                        'required' => $field->required,
                     ]
                 ]);
 
                 break;
-
 
             case 'radio':
                 $form->addFormField($field->tag, [
@@ -174,7 +172,7 @@ class ModuleSubscribe extends Module
                     'inputType' => 'radio',
                     'options' => $field->options->choices,
                     'eval' => [
-                        'required' => $field->required
+                        'required' => $field->required,
                     ]
                 ]);
 

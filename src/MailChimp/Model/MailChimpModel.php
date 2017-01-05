@@ -47,7 +47,7 @@ class MailChimpModel extends Model
                     'name' => $rawField->name,
                     'type' => $rawField->type,
                     'required' => !!$rawField->required,
-                    'options' => $rawField->options
+                    'options' => $rawField->options,
                 ];
 
                 $fields[] = $field;
