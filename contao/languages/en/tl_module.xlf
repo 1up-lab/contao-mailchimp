@@ -33,7 +33,7 @@
                 <source>Show HTML5-Placeholder</source>
             </trans-unit>
             <trans-unit id="tl_module.mailchimpShowPlaceholder.1">
-                <source>Show HTML5-Placeholder in form fields (fetched from MailChimp).</source>
+                <source>Show HTML5-Placeholder in form fields.</source>
             </trans-unit>
             <trans-unit id="tl_module.mailchimp.labelEmail">
                 <source>E-Mail</source>
