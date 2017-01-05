@@ -7,6 +7,8 @@ use Oneup\Contao\MailChimp\Model\MailChimpModel;
 use Contao\Module;
 use Contao\System;
 use Contao\Environment;
+use Contao\Input;
+use Contao\BackendTemplate;
 use Haste\Form\Form;
 use Oneup\MailChimp\Client;
 
@@ -22,8 +24,8 @@ class ModuleSubscribe extends Module
     public function generate()
     {
         if (TL_MODE == 'BE') {
-            /** @var \BackendTemplate|object $objTemplate */
-            $objTemplate = new \BackendTemplate('be_wildcard');
+            /** @var BackendTemplate|object $objTemplate */
+            $objTemplate = new BackendTemplate('be_wildcard');
             $objTemplate->wildcard = '### ' . utf8_strtoupper($GLOBALS['TL_LANG']['FMD']['mailchimp_subscribe'][0]) . ' ###';
 
             return $objTemplate->parse();
@@ -41,19 +43,24 @@ class ModuleSubscribe extends Module
         System::loadLanguageFile('tl_module');
 
         $objForm = new Form('mailchimp-subscribe', 'POST', function(Form $objHaste) {
-            return \Input::post('FORM_SUBMIT') === $objHaste->getFormId();
+            return Input::post('FORM_SUBMIT') === $objHaste->getFormId();
         });
 
         $objForm->setFormActionFromUri(Environment::get('request'));
 
+        $eval = [
+            'mandatory' => true,
+            'rgxp' => 'email',
+        ];
+
+        if ((int) $this->mailchimpShowPlaceholder) {
+            $eval['placeholder'] = $GLOBALS['TL_LANG']['tl_module']['mailchimp']['placeholderEmail'];
+        }
+
         $objForm->addFormField('email', [
             'label' => $GLOBALS['TL_LANG']['tl_module']['mailchimp']['labelEmail'],
             'inputType' => 'text',
-            'eval' => [
-                'mandatory' => true,
-                'rgxp' => 'email',
-                'placeholder' => $GLOBALS['TL_LANG']['tl_module']['mailchimp']['placeholderEmail'],
-            ],
+            'eval' => $eval,
         ]);
 
         $fields = json_decode($this->objMailChimp->fields);
@@ -130,11 +137,14 @@ class ModuleSubscribe extends Module
 
                 $eval = [
                     'mandatory' => $field->required,
-                    'placeholder' => $field->name
                 ];
 
                 if (($maxLength = (int) $field->options->size) > 0) {
                     $eval['maxlength'] = $maxLength;
+                }
+
+                if ((int) $this->mailchimpShowPlaceholder) {
+                    $eval['placeholder'] = $field->name;
                 }
 
                 $form->addFormField($field->tag, [
@@ -171,27 +181,37 @@ class ModuleSubscribe extends Module
                 break;
 
             case 'number':
+                $eval = [
+                    'rgxp' => 'digit',
+                    'mandatory' => $field->required,
+                ];
+
+                if ((int) $this->mailchimpShowPlaceholder) {
+                    $eval['placeholder'] = $field->name;
+                }
+
                 $form->addFormField($field->tag, [
                     'label' => $field->name,
                     'inputType' => 'text',
-                    'eval' => [
-                        'rgxp' => 'digit',
-                        'mandatory' => $field->required,
-                        'placeholder' => $field->name
-                    ],
+                    'eval' => $eval,
                 ]);
 
                 break;
 
             case 'url':
+                $eval = [
+                    'rgxp' => 'url',
+                    'mandatory' => $field->required,
+                ];
+
+                if ((int) $this->mailchimpShowPlaceholder) {
+                    $eval['placeholder'] = $field->name;
+                }
+
                 $form->addFormField($field->tag, [
                     'label' => $field->name,
                     'inputType' => 'text',
-                    'eval' => [
-                        'rgxp' => 'url',
-                        'mandatory' => $field->required,
-                        'placeholder' => $field->name
-                    ],
+                    'eval' => $eval,
                 ]);
 
                 break;

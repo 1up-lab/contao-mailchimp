@@ -4,7 +4,7 @@ $GLOBALS['TL_DCA']['tl_module']['palettes']['mailchimp_subscribe'] = '
     {title_legend},name,headline,type;
     {list_legend},mailchimpList;
     {jumpTo_legend},mailchimpJumpTo;
-	{option_legend},mailchimpOptin;
+	{option_legend},mailchimpOptin,mailchimpShowOptional;
 	{protected_legend:hide},protected;
 	{expert_legend:hide},guests,cssID,space';
 
@@ -42,6 +42,16 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['mailchimpJumpTo'] = [
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['mailchimpOptin'] = [
     'label' => &$GLOBALS['TL_LANG']['tl_module']['mailchimpOptin'],
+    'inputType' => 'checkbox',
+    'eval' => [
+        'mandatory' => false,
+        'isBoolean' => true,
+    ],
+    'sql' => "varchar(1) NOT NULL default ''",
+];
+
+$GLOBALS['TL_DCA']['tl_module']['fields']['mailchimpShowOptional'] = [
+    'label' => &$GLOBALS['TL_LANG']['tl_module']['mailchimpShowOptional'],
     'inputType' => 'checkbox',
     'eval' => [
         'mandatory' => false,
