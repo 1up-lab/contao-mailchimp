@@ -3,10 +3,11 @@
 namespace Oneup\Contao\MailChimp\Model;
 
 use Contao\DC_Table;
+use Contao\Model;
 use Oneup\MailChimp\Client as ApiClient;
 use Oneup\MailChimp\Exception\ApiException;
 
-class MailChimpModel extends \Model
+class MailChimpModel extends Model
 {
     protected static $strTable = 'tl_mailchimp';
 
