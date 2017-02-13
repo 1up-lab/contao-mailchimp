@@ -22,7 +22,7 @@
   "require":{
     "php":">=5.5",
     "contao/core-bundle":"^3.2 || ^4.1",
-    "contao-community-alliance/composer-plugin":"~2.4 | ~3.0"
+    "contao-community-alliance/composer-plugin":"~2.4 | ~3.0",
     "codefog/contao-haste": "~4.0",
     "oneup/mailchimp-api-v3": "~2.0"
   },
