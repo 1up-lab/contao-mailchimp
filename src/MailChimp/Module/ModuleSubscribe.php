@@ -133,6 +133,7 @@ class ModuleSubscribe extends Module
             case 'date':
             case 'birthday':
             case 'phone':
+                $inputType = 'text';
 
                 $eval = [
                     'mandatory' => $field->required,
@@ -146,39 +147,64 @@ class ModuleSubscribe extends Module
                     $eval['placeholder'] = $field->name;
                 }
 
+                if (false === (bool) $field->public) {
+                    $inputType = 'hidden';
+                }
+
                 $form->addFormField($field->tag, [
                     'label' => $field->name,
-                    'inputType' => 'text',
-                    'eval' => $eval
+                    'inputType' => $inputType,
+                    'eval' => $eval,
+                    'default' => $field->default,
                 ]);
 
                 break;
 
             case 'dropdown':
+                $inputType = 'select';
+
+                if (false === (bool) $field->public) {
+                    $inputType = 'hidden';
+                }
+
                 $form->addFormField($field->tag, [
                     'label' => $field->name,
-                    'inputType' => 'select',
+                    'inputType' => $inputType,
                     'options' => $field->options->choices,
                     'eval' => [
                         'required' => $field->required,
-                    ]
+                    ],
+                    'default' => $field->default,
                 ]);
 
                 break;
 
             case 'radio':
+                $inputType = 'radio';
+
+                if (false === (bool) $field->public) {
+                    $inputType = 'hidden';
+                }
+
                 $form->addFormField($field->tag, [
                     'label' => $field->name,
-                    'inputType' => 'radio',
+                    'inputType' => $inputType,
                     'options' => $field->options->choices,
                     'eval' => [
                         'required' => $field->required,
-                    ]
+                    ],
+                    'default' => $field->default,
                 ]);
 
                 break;
 
             case 'number':
+                $inputType = 'text';
+
+                if (false === (bool) $field->public) {
+                    $inputType = 'hidden';
+                }
+
                 $eval = [
                     'rgxp' => 'digit',
                     'mandatory' => $field->required,
@@ -190,13 +216,20 @@ class ModuleSubscribe extends Module
 
                 $form->addFormField($field->tag, [
                     'label' => $field->name,
-                    'inputType' => 'text',
+                    'inputType' => $inputType,
                     'eval' => $eval,
+                    'default' => $field->default,
                 ]);
 
                 break;
 
             case 'url':
+                $inputType = 'text';
+
+                if (false === (bool) $field->public) {
+                    $inputType = 'hidden';
+                }
+
                 $eval = [
                     'rgxp' => 'url',
                     'mandatory' => $field->required,
@@ -208,8 +241,9 @@ class ModuleSubscribe extends Module
 
                 $form->addFormField($field->tag, [
                     'label' => $field->name,
-                    'inputType' => 'text',
+                    'inputType' => $inputType,
                     'eval' => $eval,
+                    'default' => $field->default,
                 ]);
 
                 break;
