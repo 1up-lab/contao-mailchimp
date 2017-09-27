@@ -47,22 +47,15 @@ class ModuleSubscribe extends Module
 
         $objForm->setFormActionFromUri(Environment::get('request'));
 
-        $eval = [
-            'mandatory' => true,
-            'rgxp' => 'email',
-        ];
-
-        if ((int) $this->mailchimpShowPlaceholder) {
-            $eval['placeholder'] = $GLOBALS['TL_LANG']['tl_module']['mailchimp']['placeholderEmail'];
-        }
-
-        $objForm->addFormField('email', [
-            'label' => $GLOBALS['TL_LANG']['tl_module']['mailchimp']['labelEmail'],
-            'inputType' => 'text',
-            'eval' => $eval,
-        ]);
-
         $fields = json_decode($this->objMailChimp->fields);
+
+        // sort fields by displayOrder ASC
+        usort($fields, function($a, $b) {
+            return ($a->displayOrder > $b->displayOrder) ? 1 : -1;
+        });
+
+        $fields = $this->insertEmailField($fields);
+
         $mergeVarTags = [];
 
         if (is_array($fields)) {
@@ -114,6 +107,47 @@ class ModuleSubscribe extends Module
         $this->Template->form = $form;
     }
 
+
+    /**
+     * Locates the position of the email field within the array of fields and inserts it
+     * @param $fields
+     * @return mixed
+     */
+    protected function insertEmailField($fields) {
+        $email = (object) [
+            'id' => 0,
+            'tag' => 'EMAIL',
+            'name' => $GLOBALS['TL_LANG']['tl_module']['mailchimp']['labelEmail'],
+            'type' => 'text',
+            'displayOrder' => -1,
+            'required' => true,
+            'public' => true,
+        ];
+
+        // if first field is displayed second, insert email field before
+        if (2 === $fields[0]->displayOrder) {
+            $email->displayOrder = 1;
+        } else {
+            // check if display order is consecutive
+            $index = $fields[0]->displayOrder;
+            foreach ($fields as $field) {
+                // if one display slot is missing, the email field goes here
+                if (($index + 1) === $field->displayOrder) {
+                    $email->displayOrder = $index;
+                    break;
+                }
+                $index++;
+            }
+            // otherwise, append email field
+            if (-1 === $email->displayOrder) {
+                $email->displayOrder = (count($fields) + 1);
+            }
+        }
+
+        array_splice($fields, ($email->displayOrder - 1), 0, [$email]);
+        return $fields;
+    }
+
     /**
      * Return the name of the field.
      *
@@ -128,6 +162,26 @@ class ModuleSubscribe extends Module
         }
 
         switch ($field->type) {
+
+            case 'email':
+                $inputType = 'text';
+
+                $eval = [
+                    'mandatory' => true,
+                    'rgxp' => 'email',
+                ];
+
+                if ((int) $this->mailchimpShowPlaceholder) {
+                    $eval['placeholder'] = $GLOBALS['TL_LANG']['tl_module']['mailchimp']['placeholderEmail'];
+                }
+
+                $form->addFormField('email', [
+                    'label' => $field->name,
+                    'inputType' => $inputType,
+                    'eval' => $eval,
+                ]);
+
+                break;
             case 'text':
             case 'address':
             case 'date':

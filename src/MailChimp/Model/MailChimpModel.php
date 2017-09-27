@@ -46,6 +46,7 @@ class MailChimpModel extends Model
                     'tag' => $rawField->tag,
                     'name' => $rawField->name,
                     'type' => $rawField->type,
+                    'displayOrder' => $rawField->display_order,
                     'required' => !!$rawField->required,
                     'options' => $rawField->options,
                     'public' => $rawField->public,
