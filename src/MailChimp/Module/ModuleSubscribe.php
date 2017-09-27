@@ -182,7 +182,6 @@ class ModuleSubscribe extends Module
                 ]);
 
                 break;
-            case 'email':
             case 'text':
             case 'address':
             case 'date':
