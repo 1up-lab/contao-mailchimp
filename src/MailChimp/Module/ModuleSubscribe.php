@@ -50,7 +50,7 @@ class ModuleSubscribe extends Module
         $fields = json_decode($this->objMailChimp->fields);
 
         // sort fields by displayOrder ASC
-        usort($fields, function($a, $b) {
+        usort($fields, function ($a, $b) {
             return ($a->displayOrder > $b->displayOrder) ? 1 : -1;
         });
 
@@ -113,7 +113,8 @@ class ModuleSubscribe extends Module
      * @param $fields
      * @return mixed
      */
-    protected function insertEmailField($fields) {
+    protected function insertEmailField($fields)
+    {
         $email = (object) [
             'id' => 0,
             'tag' => 'EMAIL',
@@ -130,14 +131,17 @@ class ModuleSubscribe extends Module
         } else {
             // check if display order is consecutive
             $index = $fields[0]->displayOrder;
+
             foreach ($fields as $field) {
                 // if one display slot is missing, the email field goes here
                 if (($index + 1) === $field->displayOrder) {
                     $email->displayOrder = $index;
                     break;
                 }
+
                 $index++;
             }
+
             // otherwise, append email field
             if (-1 === $email->displayOrder) {
                 $email->displayOrder = (count($fields) + 1);
@@ -145,6 +149,7 @@ class ModuleSubscribe extends Module
         }
 
         array_splice($fields, ($email->displayOrder - 1), 0, [$email]);
+
         return $fields;
     }
 
@@ -182,6 +187,7 @@ class ModuleSubscribe extends Module
                 ]);
 
                 break;
+
             case 'text':
             case 'address':
             case 'date':
