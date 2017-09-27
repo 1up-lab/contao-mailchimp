@@ -49,9 +49,9 @@ class ModuleSubscribe extends Module
 
         $fields = json_decode($this->objMailChimp->fields);
 
-        // sort fields by display_order ASC
+        // sort fields by displayOrder ASC
         usort($fields, function($a, $b) {
-            return ($a->display_order > $b->display_order) ? 1 : -1;
+            return ($a->displayOrder > $b->displayOrder) ? 1 : -1;
         });
 
         $fields = $this->insertEmailField($fields);
@@ -119,32 +119,32 @@ class ModuleSubscribe extends Module
             'tag' => 'EMAIL',
             'name' => $GLOBALS['TL_LANG']['tl_module']['mailchimp']['labelEmail'],
             'type' => 'text',
-            'display_order' => -1,
+            'displayOrder' => -1,
             'required' => true,
             'public' => true,
         ];
 
         // if first field is displayed second, insert email field before
-        if ($fields[0]->display_order === 2) {
-            $email->display_order = 1;
+        if (2 === $fields[0]->displayOrder) {
+            $email->displayOrder = 1;
         } else {
             // check if display order is consecutive
-            $index = $fields[0]->display_order;
+            $index = $fields[0]->displayOrder;
             foreach ($fields as $field) {
                 // if one display slot is missing, the email field goes here
-                if ($field->display_order === ($index + 1)) {
-                    $email->display_order = $index;
+                if (($index + 1) === $field->displayOrder) {
+                    $email->displayOrder = $index;
                     break;
                 }
                 $index++;
             }
             // otherwise, append email field
-            if ($email->display_order === -1) {
-                $email->display_order = (count($fields) + 1);
+            if (-1 === $email->displayOrder) {
+                $email->displayOrder = (count($fields) + 1);
             }
         }
 
-        array_splice($fields, ($email->display_order - 1), 0, [$email]);
+        array_splice($fields, ($email->displayOrder - 1), 0, [$email]);
         return $fields;
     }
 
