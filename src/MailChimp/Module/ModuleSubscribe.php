@@ -10,6 +10,7 @@ use Contao\Input;
 use Contao\BackendTemplate;
 use Haste\Form\Form;
 use Oneup\MailChimp\Client;
+use Patchwork\Utf8;
 
 class ModuleSubscribe extends Module
 {
@@ -25,7 +26,7 @@ class ModuleSubscribe extends Module
         if (TL_MODE == 'BE') {
             /** @var BackendTemplate|object $objTemplate */
             $objTemplate = new BackendTemplate('be_wildcard');
-            $objTemplate->wildcard = '### '.utf8_strtoupper($GLOBALS['TL_LANG']['FMD']['mailchimp_subscribe'][0]).' ###';
+            $objTemplate->wildcard = '### '.Utf8::strtoupper($GLOBALS['TL_LANG']['FMD']['mailchimp_subscribe'][0]).' ###';
 
             return $objTemplate->parse();
         }
@@ -41,7 +42,7 @@ class ModuleSubscribe extends Module
     {
         System::loadLanguageFile('tl_module');
 
-        $objForm = new Form('mailchimp-subscribe', 'POST', function (Form $objHaste) {
+        $objForm = new Form('mailchimp-subscribe-'.$this->id, 'POST', function (Form $objHaste) {
             return Input::post('FORM_SUBMIT') === $objHaste->getFormId();
         });
 
@@ -88,7 +89,7 @@ class ModuleSubscribe extends Module
 
             $subscribed = $this->mailChimp->subscribeToList(
                 $this->mailChimpListId,
-                $arrData['email'],
+                $arrData['EMAIL'],
                 $mergeVars,
                 (boolean) $this->mailchimpOptin
             );

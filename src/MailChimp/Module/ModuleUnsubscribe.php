@@ -10,6 +10,7 @@ use Contao\Environment;
 use Oneup\Contao\MailChimp\Model\MailChimpModel;
 use Haste\Form\Form;
 use Oneup\MailChimp\Client;
+use Patchwork\Utf8;
 
 class ModuleUnsubscribe extends Module
 {
@@ -25,7 +26,7 @@ class ModuleUnsubscribe extends Module
         if (TL_MODE == 'BE') {
             /** @var BackendTemplate|object $objTemplate */
             $objTemplate = new BackendTemplate('be_wildcard');
-            $objTemplate->wildcard = '### '.utf8_strtoupper($GLOBALS['TL_LANG']['FMD']['mailchimp_unsubscribe'][0]).' ###';
+            $objTemplate->wildcard = '### '.Utf8::strtoupper($GLOBALS['TL_LANG']['FMD']['mailchimp_unsubscribe'][0]).' ###';
 
             return $objTemplate->parse();
         }
@@ -41,7 +42,7 @@ class ModuleUnsubscribe extends Module
     {
         System::loadLanguageFile('tl_module');
 
-        $objForm = new Form('mailchimp-subscribe-'.$this->id, 'POST', function (Form $objHaste) {
+        $objForm = new Form('mailchimp-unsubscribe-'.$this->id, 'POST', function (Form $objHaste) {
             return Input::post('FORM_SUBMIT') === $objHaste->getFormId();
         });
 
