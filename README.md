@@ -1,7 +1,7 @@
-Contao Mailchimp
+Contao Mailchimp Bundle
 ==========================
 
-This extension provides subscribe and unsubscribe forms for easy integration in Contao.
+This Contao bundle provides subscribe and unsubscribe forms for easy integration in Contao.
 
 [![Author](http://img.shields.io/badge/author-@1upgmbh-blue.svg?style=flat-square)](https://twitter.com/1upgmbh)
 [![Software License](http://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE)
