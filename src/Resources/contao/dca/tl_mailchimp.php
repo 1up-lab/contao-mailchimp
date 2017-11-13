@@ -5,7 +5,7 @@ $GLOBALS['TL_DCA']['tl_mailchimp'] = [
         'dataContainer' => 'Table',
         'enableVersioning' => true,
         'onsubmit_callback' => [
-            ['Oneup\Contao\MailChimp\Model\MailChimpModel', 'saveListFields'],
+            ['oneup_contao_mailchimp.listener.dca', 'onSaveListFields'],
         ],
         'sql' => [
             'keys' => [

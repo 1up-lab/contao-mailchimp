@@ -1,8 +1,10 @@
 <?php
 
-namespace Oneup\Contao\MailChimp\Module;
+declare(strict_types=1);
 
-use Oneup\Contao\MailChimp\Model\MailChimpModel;
+namespace Oneup\Contao\MailChimpBundle\Module;
+
+use Oneup\Contao\MailChimpBundle\Model\MailChimpModel;
 use Contao\Module;
 use Contao\System;
 use Contao\Environment;
@@ -21,7 +23,7 @@ class ModuleSubscribe extends Module
     protected $objMailChimp;
     protected $mailChimpListId;
 
-    public function generate()
+    public function generate(): string
     {
         if (TL_MODE == 'BE') {
             /** @var BackendTemplate|object $objTemplate */
@@ -38,7 +40,7 @@ class ModuleSubscribe extends Module
         return parent::generate();
     }
 
-    protected function compile()
+    protected function compile(): void
     {
         System::loadLanguageFile('tl_module');
 
@@ -111,10 +113,11 @@ class ModuleSubscribe extends Module
 
     /**
      * Locates the position of the email field within the array of fields and inserts it
-     * @param $fields
-     * @return mixed
+     *
+     * @param array $fields
+     * @return array
      */
-    protected function insertEmailField($fields)
+    protected function insertEmailField(array $fields): array
     {
         $email = (object) [
             'id' => 0,
@@ -157,11 +160,11 @@ class ModuleSubscribe extends Module
     /**
      * Return the name of the field.
      *
-     * @param $field
-     * @param  Form  $form
-     * @return mixed
+     * @param \stdClass $field
+     * @param Form $form
+     * @return null|string
      */
-    protected function addFieldToForm($field, Form $form)
+    protected function addFieldToForm(\stdClass $field, Form $form): ?string
     {
         if (!in_array($field->type, ['text', 'number', 'website', 'address', 'dropdown', 'radio', 'url', 'date', 'birthday', 'phone'])) {
             return null;

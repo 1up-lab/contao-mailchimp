@@ -1,13 +1,15 @@
 <?php
 
-namespace Oneup\Contao\MailChimp\Module;
+declare(strict_types=1);
+
+namespace Oneup\Contao\MailChimpBundle\Module;
 
 use Contao\Module;
 use Contao\BackendTemplate;
 use Contao\System;
 use Contao\Input;
 use Contao\Environment;
-use Oneup\Contao\MailChimp\Model\MailChimpModel;
+use Oneup\Contao\MailChimpBundle\Model\MailChimpModel;
 use Haste\Form\Form;
 use Oneup\MailChimp\Client;
 use Patchwork\Utf8;
@@ -21,7 +23,7 @@ class ModuleUnsubscribe extends Module
     protected $objMailChimp;
     protected $mailChimpListId;
 
-    public function generate()
+    public function generate(): string
     {
         if (TL_MODE == 'BE') {
             /** @var BackendTemplate|object $objTemplate */
@@ -38,7 +40,7 @@ class ModuleUnsubscribe extends Module
         return parent::generate();
     }
 
-    protected function compile()
+    protected function compile(): void
     {
         System::loadLanguageFile('tl_module');
 

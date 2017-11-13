@@ -1,19 +1,19 @@
 <?php
 
-namespace Oneup\Contao\MailChimp\Model;
+declare(strict_types=1);
+
+namespace Oneup\Contao\MailChimpBundle\EventListener;
 
 use Contao\Controller;
 use Contao\DC_Table;
-use Contao\Model;
 use Contao\System;
+use Oneup\Contao\MailChimpBundle\Model\MailChimpModel;
 use Oneup\MailChimp\Client as ApiClient;
 use Oneup\MailChimp\Exception\ApiException;
 
-class MailChimpModel extends Model
+class DcaListener
 {
-    protected static $strTable = 'tl_mailchimp';
-
-    public static function saveListFields(DC_Table $dcTable)
+    public static function onSaveListFields(DC_Table $dcTable): void
     {
         $record = MailChimpModel::findByPk($dcTable->activeRecord->id);
 
