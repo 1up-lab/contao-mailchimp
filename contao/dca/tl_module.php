@@ -4,17 +4,19 @@ $GLOBALS['TL_DCA']['tl_module']['palettes']['mailchimp_subscribe'] = '
     {title_legend},name,headline,type;
     {list_legend},mailchimpList;
     {jumpTo_legend},mailchimpJumpTo;
-	{option_legend},mailchimpOptin,mailchimpShowPlaceholder;
-	{protected_legend:hide},protected;
-	{expert_legend:hide},guests,cssID,space';
+    {option_legend},mailchimpOptin,mailchimpShowPlaceholder;
+    {template_legend:hide},customTpl;
+    {protected_legend:hide},protected;
+    {expert_legend:hide},guests,cssID,space';
 
 $GLOBALS['TL_DCA']['tl_module']['palettes']['mailchimp_unsubscribe'] = '
     {title_legend},name,headline,type;
     {list_legend},mailchimpList;
     {jumpTo_legend},mailchimpJumpTo;
     {option_legend},mailchimpShowPlaceholder;
-	{protected_legend:hide},protected;
-	{expert_legend:hide},guests,cssID,space';
+    {template_legend:hide},customTpl;
+    {protected_legend:hide},protected;
+    {expert_legend:hide},guests,cssID,space';
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['mailchimpList'] = [
     'label' => &$GLOBALS['TL_LANG']['tl_module']['mailchimpList'],
