@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Oneup\Contao\MailChimpBundle\Module;
 
-use Contao\Module;
 use Contao\BackendTemplate;
-use Contao\System;
-use Contao\Input;
 use Contao\Environment;
-use Oneup\Contao\MailChimpBundle\Model\MailChimpModel;
+use Contao\Input;
+use Contao\Module;
+use Contao\System;
 use Haste\Form\Form;
+use Oneup\Contao\MailChimpBundle\Model\MailChimpModel;
 use Oneup\MailChimp\Client;
 use Patchwork\Utf8;
 
@@ -25,7 +25,7 @@ class ModuleUnsubscribe extends Module
 
     public function generate(): string
     {
-        if (TL_MODE == 'BE') {
+        if (TL_MODE === 'BE') {
             /** @var BackendTemplate|object $objTemplate */
             $objTemplate = new BackendTemplate('be_wildcard');
             $objTemplate->wildcard = '### '.Utf8::strtoupper($GLOBALS['TL_LANG']['FMD']['mailchimp_unsubscribe'][0]).' ###';
@@ -67,7 +67,7 @@ class ModuleUnsubscribe extends Module
 
         $objForm->addFormField('submit', [
             'label' => $GLOBALS['TL_LANG']['tl_module']['mailchimp']['labelSubmit'],
-            'inputType' => 'submit'
+            'inputType' => 'submit',
         ]);
 
         $objForm->addContaoHiddenFields();

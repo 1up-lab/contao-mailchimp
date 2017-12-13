@@ -47,7 +47,7 @@ class DcaListener
                     'name' => $rawField->name,
                     'type' => $rawField->type,
                     'displayOrder' => $rawField->display_order,
-                    'required' => !!$rawField->required,
+                    'required' => (bool) $rawField->required,
                     'options' => $rawField->options,
                     'public' => $rawField->public,
                     'default' => $rawField->default_value,

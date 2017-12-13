@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace Oneup\Contao\MailChimpBundle\Module;
 
+use Contao\BackendTemplate;
 use Contao\CoreBundle\Monolog\ContaoContext;
-use Oneup\Contao\MailChimpBundle\Model\MailChimpModel;
-use Contao\Module;
-use Contao\System;
 use Contao\Environment;
 use Contao\Input;
-use Contao\BackendTemplate;
+use Contao\Module;
+use Contao\System;
 use Haste\Form\Form;
+use Oneup\Contao\MailChimpBundle\Model\MailChimpModel;
 use Oneup\MailChimp\Client;
 use Patchwork\Utf8;
 use Psr\Log\LoggerInterface;
@@ -27,7 +27,7 @@ class ModuleSubscribe extends Module
 
     public function generate(): string
     {
-        if (TL_MODE == 'BE') {
+        if (TL_MODE === 'BE') {
             /** @var BackendTemplate|object $objTemplate */
             $objTemplate = new BackendTemplate('be_wildcard');
             $objTemplate->wildcard = '### '.Utf8::strtoupper($GLOBALS['TL_LANG']['FMD']['mailchimp_subscribe'][0]).' ###';
@@ -89,7 +89,7 @@ class ModuleSubscribe extends Module
 
         $objForm->addFormField('submit', [
             'label' => $GLOBALS['TL_LANG']['tl_module']['mailchimp']['labelSubmit'],
-            'inputType' => 'submit'
+            'inputType' => 'submit',
         ]);
 
         $objForm->addContaoHiddenFields();
@@ -109,7 +109,7 @@ class ModuleSubscribe extends Module
                 $this->mailChimpListId,
                 $arrData['EMAIL'],
                 $mergeVars,
-                (boolean) $this->mailchimpOptin
+                (bool) $this->mailchimpOptin
             );
 
             if ($subscribed) {
@@ -126,11 +126,11 @@ class ModuleSubscribe extends Module
         $this->Template->form = $form;
     }
 
-
     /**
-     * Locates the position of the email field within the array of fields and inserts it
+     * Locates the position of the email field within the array of fields and inserts it.
      *
      * @param array $fields
+     *
      * @return array
      */
     protected function insertEmailField(array $fields): array
@@ -159,7 +159,7 @@ class ModuleSubscribe extends Module
                     break;
                 }
 
-                $index++;
+                ++$index;
             }
 
             // otherwise, append email field
@@ -177,17 +177,17 @@ class ModuleSubscribe extends Module
      * Return the name of the field.
      *
      * @param \stdClass $field
-     * @param Form $form
+     * @param Form      $form
+     *
      * @return null|string
      */
     protected function addFieldToForm(\stdClass $field, Form $form): ?string
     {
-        if (!in_array($field->type, ['text', 'number', 'website', 'address', 'dropdown', 'radio', 'url', 'date', 'birthday', 'phone'])) {
+        if (!in_array($field->type, ['text', 'number', 'website', 'address', 'dropdown', 'radio', 'url', 'date', 'birthday', 'phone'], true)) {
             return null;
         }
 
         switch ($field->type) {
-
             case 'email':
                 $inputType = 'text';
 

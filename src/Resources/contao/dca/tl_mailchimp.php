@@ -65,7 +65,7 @@ $GLOBALS['TL_DCA']['tl_mailchimp'] = [
 
     'fields' => [
         'id' => [
-            'sql' => "int(10) unsigned NOT NULL auto_increment",
+            'sql' => 'int(10) unsigned NOT NULL auto_increment',
         ],
 
         'tstamp' => [
@@ -111,7 +111,7 @@ $GLOBALS['TL_DCA']['tl_mailchimp'] = [
         ],
 
         'fields' => [
-            'sql' => "blob NULL",
+            'sql' => 'blob NULL',
         ],
     ],
 ];
