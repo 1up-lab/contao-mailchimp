@@ -5,6 +5,7 @@ $GLOBALS['TL_DCA']['tl_module']['palettes']['mailchimp_subscribe'] = '
     {list_legend},mailchimpList;
     {jumpTo_legend},mailchimpJumpTo;
     {option_legend},mailchimpOptin,mailchimpShowPlaceholder;
+    {template_legend:hide},customTpl;
     {protected_legend:hide},protected;
     {expert_legend:hide},guests,cssID,space';
 
@@ -13,6 +14,7 @@ $GLOBALS['TL_DCA']['tl_module']['palettes']['mailchimp_unsubscribe'] = '
     {list_legend},mailchimpList;
     {jumpTo_legend},mailchimpJumpTo;
     {option_legend},mailchimpShowPlaceholder;
+    {template_legend:hide},customTpl;
     {protected_legend:hide},protected;
     {expert_legend:hide},guests,cssID,space';
 
