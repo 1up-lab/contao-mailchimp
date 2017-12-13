@@ -3,7 +3,6 @@
 namespace Oneup\Contao\MailChimp\Module;
 
 use Oneup\Contao\MailChimp\Model\MailChimpModel;
-use Contao\CoreBundle\Monolog\ContaoContext;
 use Contao\Module;
 use Contao\System;
 use Contao\Environment;
@@ -12,7 +11,6 @@ use Contao\BackendTemplate;
 use Haste\Form\Form;
 use Oneup\MailChimp\Client;
 use Patchwork\Utf8;
-use Psr\Log\LoggerInterface;
 
 class ModuleSubscribe extends Module
 {
@@ -51,12 +49,7 @@ class ModuleSubscribe extends Module
         $objForm->setFormActionFromUri(Environment::get('request'));
 
         if (null === $this->objMailChimp->fields || 0 === strlen($this->objMailChimp->fields)) {
-            /** @var LoggerInterface $logger */
-            $logger = System::getContainer()->get('logger');
-            $logger->info(
-                'No MailChimp fields found. Did you configure your settings correctly?',
-                ['contao' => new ContaoContext(__METHOD__, ContaoContext::ACCESS)]
-            );
+            System::log('No MailChimp fields found. Did you configure your settings correctly?', __METHOD__, TL_ERROR);
 
             $this->Template->error = true;
             $this->Template->errorMsg = 'No MailChimp fields found. Did you configure your settings correctly?';
