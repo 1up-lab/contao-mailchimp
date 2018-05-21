@@ -113,5 +113,9 @@ $GLOBALS['TL_DCA']['tl_mailchimp'] = [
         'fields' => [
             'sql' => 'blob NULL',
         ],
+
+        'groups' => [
+            'sql' => 'blob NULL',
+        ],
     ],
 ];

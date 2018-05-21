@@ -59,5 +59,42 @@ class DcaListener
             $record->fields = json_encode($fields);
             $record->save();
         }
+
+        // Get interest groups
+        try {
+            $categoryData = $apiClient->getListGroupCategories($listId);
+            $categories = [];
+
+            foreach ($categoryData->categories as $group) {
+                $groupData = $apiClient->getListGroup($listId, $group->id);
+                $interests = [];
+
+                foreach ($groupData->interests as $interest) {
+                    $interests[] = [
+                        'id' => $interest->id,
+                        'name' => $interest->name,
+                        'displayOrder' => $interest->display_order
+                    ];
+                }
+
+                $categories[] = [
+                    'id' => $group->id,
+                    'title' => $group->title,
+                    'type' => $group->type,
+                    'interests' => $interests
+                ];
+            }
+
+            $record->groups = json_encode($categories);
+            $record->save();
+        } catch (ApiException $e) {
+            System::log(
+                sprintf('There was an error with the MailChimp API: %s', $e->getMessage()),
+                __METHOD__,
+                TL_ERROR
+            );
+
+            Controller::redirect('contao/main.php?act=error');
+        }
     }
 }
