@@ -4,7 +4,7 @@ $GLOBALS['TL_DCA']['tl_module']['palettes']['mailchimp_subscribe'] = '
     {title_legend},name,headline,type;
     {list_legend},mailchimpList;
     {jumpTo_legend},mailchimpJumpTo;
-    {option_legend},mailchimpOptin,mailchimpShowPlaceholder;
+    {option_legend},mailchimpOptin,mailchimpShowPlaceholder,mailchimpMandatoryInterests;
     {template_legend:hide},customTpl;
     {protected_legend:hide},protected;
     {expert_legend:hide},guests,cssID,space';
@@ -61,4 +61,14 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['mailchimpShowPlaceholder'] = [
         'isBoolean' => true,
     ],
     'sql' => "varchar(1) NOT NULL default '1'",
+];
+
+$GLOBALS['TL_DCA']['tl_module']['fields']['mailchimpMandatoryInterests'] = [
+    'label' => &$GLOBALS['TL_LANG']['tl_module']['mailchimpMandatoryInterests'],
+    'inputType' => 'checkbox',
+    'eval' => [
+        'mandatory' => false,
+        'isBoolean' => true,
+    ],
+    'sql' => "varchar(1) NOT NULL default ''",
 ];

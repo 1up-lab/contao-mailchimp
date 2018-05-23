@@ -87,6 +87,26 @@ class ModuleSubscribe extends Module
             }
         }
 
+        // add the interest groups
+        $groups = json_decode($this->objMailChimp->groups);
+
+        // sort categories by displayOrder ASC
+        usort($groups, function ($a, $b) {
+            return ($a->displayOrder > $b->displayOrder) ? 1 : -1;
+        });
+
+        $interestCategoryIds = [];
+
+        if (is_array($groups)) {
+            foreach ($groups as $category) {
+                $addedName = $this->addInterestCategoryToForm($category, $objForm);
+
+                if (null !== $addedName) {
+                    $interestCategoryIds[] = $addedName;
+                }
+            }
+        }
+
         $objForm->addFormField('submit', [
             'label' => $GLOBALS['TL_LANG']['tl_module']['mailchimp']['labelSubmit'],
             'inputType' => 'submit',
@@ -105,11 +125,26 @@ class ModuleSubscribe extends Module
                 $mergeVars[$tag] = $arrData[$tag];
             }
 
+            $interests = [];
+
+            foreach ($interestCategoryIds as $id) {
+                if (!empty($arrData[$id])) {
+                    if (is_array($arrData[$id])) {
+                        foreach ($arrData[$id] as $groupId) {
+                            $interests[$groupId] = true;
+                        }
+                    } else {
+                        $interests[$arrData[$id]] = true;
+                    }
+                }
+            }
+
             $subscribed = $this->mailChimp->subscribeToList(
                 $this->mailChimpListId,
                 $arrData['EMAIL'],
                 $mergeVars,
-                (bool) $this->mailchimpOptin
+                (bool) $this->mailchimpOptin,
+                $interests
             );
 
             if ($subscribed) {
@@ -330,5 +365,52 @@ class ModuleSubscribe extends Module
         }
 
         return $field->tag;
+    }
+
+    /**
+     * Return the name of the field.
+     *
+     * @param \stdClass $category
+     * @param Form      $form
+     *
+     * @return null|string
+     */
+    protected function addInterestCategoryToForm(\stdClass $category, Form $form): ?string
+    {
+        if (!in_array($category->type, ['checkboxes', 'radio', 'dropdown'], true)) {
+            return null;
+        }
+
+        $interests = $category->interests;
+
+        // sort interests by displayOrder ASC
+        usort($interests, function ($a, $b) {
+            return ($a->displayOrder > $b->displayOrder) ? 1 : -1;
+        });
+
+        $inputType = str_replace(['checkboxes', 'dropdown'], ['checkbox', 'select'], $category->type);
+        $options = [];
+        $eval = ['mandatory' => (bool) $this->mailchimpMandatoryInterests];
+
+        foreach ($interests as $interest) {
+            $options[$interest->id] = $interest->name;
+        }
+
+        if (empty($options)) {
+            return null;
+        }
+
+        if ('dropdown' === $category->type) {
+            $eval['includeBlankOption'] = true;
+        }
+
+        $form->addFormField($category->id, [
+            'label' => $category->title,
+            'inputType' => $inputType,
+            'options' => $options,
+            'eval' => $eval
+        ]);
+
+        return $category->id;
     }
 }

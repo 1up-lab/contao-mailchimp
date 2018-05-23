@@ -35,6 +35,12 @@
             <trans-unit id="tl_module.mailchimpShowPlaceholder.1">
                 <source>Show HTML5-Placeholder in form fields.</source>
             </trans-unit>
+            <trans-unit id="tl_module.mailchimpMandatoryInterests.0">
+                <source>Mandatory interest groups</source>
+            </trans-unit>
+            <trans-unit id="tl_module.mailchimpMandatoryInterests.1">
+                <source>Makes the interest group selection in the form mandatory.</source>
+            </trans-unit>
             <trans-unit id="tl_module.mailchimp.labelEmail">
                 <source>E-Mail</source>
             </trans-unit>

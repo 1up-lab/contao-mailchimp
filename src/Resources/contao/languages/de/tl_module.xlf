@@ -35,6 +35,12 @@
             <trans-unit id="tl_module.mailchimpShowPlaceholder.1">
                 <target>HTML5-Placeholder in Form-Feldern anzeigen.</target>
             </trans-unit>
+            <trans-unit id="tl_module.mailchimpMandatoryInterests.0">
+                <target>Interessensgruppen als Pflichtfelder</target>
+            </trans-unit>
+            <trans-unit id="tl_module.mailchimpMandatoryInterests.1">
+                <target>Definiert die Interessensgruppen als Pflichtfelder im Formular.</target>
+            </trans-unit>
             <trans-unit id="tl_module.mailchimp.labelEmail">
                 <target>E-Mail</target>
             </trans-unit>
