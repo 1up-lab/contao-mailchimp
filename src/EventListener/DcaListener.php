@@ -25,67 +25,70 @@ class DcaListener
         $apiClient = new ApiClient($apiKey);
 
         try {
-            $fieldData = $apiClient->getListFields($listId);
-        } catch (ApiException $e) {
-            System::log(
-                sprintf('There was an error with the MailChimp API: %s', $e->getMessage()),
-                __METHOD__,
-                TL_ERROR
-            );
-
-            Controller::redirect('contao/main.php?act=error');
-        }
-
-        if ($fieldData) {
+            // Get list fields
             $fields = [];
-            $rawFields = $fieldData->merge_fields;
+            $fieldsOffset = 0;
+            $fieldsLimit = 10;
 
-            foreach ($rawFields as $rawField) {
-                $field = [
-                    'id' => $rawField->merge_id,
-                    'tag' => $rawField->tag,
-                    'name' => $rawField->name,
-                    'type' => $rawField->type,
-                    'displayOrder' => $rawField->display_order,
-                    'required' => (bool) $rawField->required,
-                    'options' => $rawField->options,
-                    'public' => $rawField->public,
-                    'default' => $rawField->default_value,
-                ];
+            while(!empty(($fieldData = $apiClient->getListFields($listId, $fieldsOffset, $fieldsLimit))->merge_fields)) {
+                $fieldsOffset += $fieldsLimit;
 
-                $fields[] = $field;
+                foreach ($fieldData->merge_fields as $rawField) {
+                    $field = [
+                        'id' => $rawField->merge_id,
+                        'tag' => $rawField->tag,
+                        'name' => $rawField->name,
+                        'type' => $rawField->type,
+                        'displayOrder' => $rawField->display_order,
+                        'required' => (bool) $rawField->required,
+                        'options' => $rawField->options,
+                        'public' => $rawField->public,
+                        'default' => $rawField->default_value,
+                    ];
+
+                    $fields[] = $field;
+                } 
             }
-
+   
             $record->fields = json_encode($fields);
-            $record->save();
-        }
 
-        // Get interest groups
-        try {
-            $categoryData = $apiClient->getListGroupCategories($listId);
+            // Get interest groups
             $categories = [];
+            $categoryOffset = 0;
+            $categoryLimit = 10;
 
-            foreach ($categoryData->categories as $group) {
-                $groupData = $apiClient->getListGroup($listId, $group->id);
-                $interests = [];
+            while(!empty(($categoryData = $apiClient->getListGroupCategories($listId, $categoryOffset, $categoryLimit))->categories)) {
+                $categoryOffset += $categoryLimit;
 
-                foreach ($groupData->interests as $interest) {
-                    $interests[] = [
-                        'id' => $interest->id,
-                        'name' => $interest->name,
-                        'displayOrder' => $interest->display_order
+                foreach ($categoryData->categories as $group) {
+                    $interests = [];
+                    $groupOffset = 0;
+                    $groupLimit = 10;
+
+                    while(!empty(($groupData = $apiClient->getListGroup($listId, $group->id, $groupOffset, $groupLimit))->interests)) {
+                        $groupOffset += $groupLimit;
+
+                        foreach ($groupData->interests as $interest) {
+                            $interests[] = [
+                                'id' => $interest->id,
+                                'name' => $interest->name,
+                                'displayOrder' => $interest->display_order
+                            ];
+                        }
+                    }
+
+                    $categories[] = [
+                        'id' => $group->id,
+                        'title' => $group->title,
+                        'type' => $group->type,
+                        'interests' => $interests
                     ];
                 }
-
-                $categories[] = [
-                    'id' => $group->id,
-                    'title' => $group->title,
-                    'type' => $group->type,
-                    'interests' => $interests
-                ];
             }
 
             $record->groups = json_encode($categories);
+
+            // Save the record
             $record->save();
         } catch (ApiException $e) {
             System::log(
