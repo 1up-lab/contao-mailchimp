@@ -114,6 +114,16 @@ class ModuleSubscribe extends Module
 
         $objForm->addContaoHiddenFields();
 
+        // HOOK: alter form
+        if (isset($GLOBALS['TL_HOOKS']['modifyMailChimpForm']) && \is_array($GLOBALS['TL_HOOKS']['modifyMailChimpForm']))
+        {
+            foreach ($GLOBALS['TL_HOOKS']['modifyMailChimpForm'] as $callback)
+            {
+                $this->import($callback[0]);
+                $this->{$callback[0]}->{$callback[1]}($objForm, $this);
+            }
+        }
+
         $this->Template->error = false;
 
         if ($objForm->validate()) {
