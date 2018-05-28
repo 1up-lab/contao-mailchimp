@@ -287,7 +287,7 @@ class ModuleSubscribe extends Module
                     'inputType' => $inputType,
                     'options' => $field->options->choices,
                     'eval' => [
-                        'required' => $field->required,
+                        'mandatory' => $field->required,
                     ],
                     'default' => $field->default,
                 ]);
@@ -306,7 +306,7 @@ class ModuleSubscribe extends Module
                     'inputType' => $inputType,
                     'options' => $field->options->choices,
                     'eval' => [
-                        'required' => $field->required,
+                        'mandatory' => $field->required,
                     ],
                     'default' => $field->default,
                 ]);
