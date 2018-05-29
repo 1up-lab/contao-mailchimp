@@ -390,7 +390,8 @@ class ModuleSubscribe extends Module
 
         $inputType = str_replace(['checkboxes', 'dropdown'], ['checkbox', 'select'], $category->type);
         $options = [];
-        $eval = ['mandatory' => (bool) $this->mailchimpMandatoryInterests];
+        $mandatoryInterests = \deserialize($this->mailchimpMandatoryInterests, true);
+        $eval = ['mandatory' => \in_array($category->id, $mandatoryInterests)];
 
         foreach ($interests as $interest) {
             $options[$interest->id] = $interest->name;
