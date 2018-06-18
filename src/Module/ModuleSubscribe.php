@@ -13,6 +13,7 @@ use Contao\System;
 use Haste\Form\Form;
 use Oneup\Contao\MailChimpBundle\Model\MailChimpModel;
 use Oneup\MailChimp\Client;
+use Oneup\MailChimp\Exception\ApiException;
 use Patchwork\Utf8;
 use Psr\Log\LoggerInterface;
 
@@ -139,19 +140,24 @@ class ModuleSubscribe extends Module
                 }
             }
 
-            $subscribed = $this->mailChimp->subscribeToList(
-                $this->mailChimpListId,
-                $arrData['EMAIL'],
-                $mergeVars,
-                (bool) $this->mailchimpOptin,
-                $interests
-            );
+            try {
+                $subscribed = $this->mailChimp->subscribeToList(
+                    $this->mailChimpListId,
+                    $arrData['EMAIL'],
+                    $mergeVars,
+                    (bool) $this->mailchimpOptin,
+                    $interests
+                );
 
-            if ($subscribed) {
-                $this->jumpToOrReload($this->mailchimpJumpTo);
-            } else {
+                if ($subscribed) {
+                    $this->jumpToOrReload($this->mailchimpJumpTo);
+                } else {
+                    $this->Template->error = true;
+                    $this->Template->errorMsg = $GLOBALS['TL_LANG']['tl_module']['mailchimp']['subscribeError'];
+                }
+            } catch (ApiException $e) {
                 $this->Template->error = true;
-                $this->Template->errorMsg = $GLOBALS['TL_LANG']['tl_module']['mailchimp']['subscribeError'];
+                $this->Template->errorMsg = $e->getMessage();
             }
         }
 
