@@ -11,6 +11,7 @@ use Contao\Input;
 use Contao\Module;
 use Contao\System;
 use Haste\Form\Form;
+use Oneup\Contao\MailChimpBundle\Event\ModifyFormEvent;
 use Oneup\Contao\MailChimpBundle\Model\MailChimpModel;
 use Oneup\MailChimp\Client;
 use Patchwork\Utf8;
@@ -114,13 +115,11 @@ class ModuleSubscribe extends Module
 
         $objForm->addContaoHiddenFields();
 
-        // HOOK: alter form
-        if (isset($GLOBALS['TL_HOOKS']['modifyMailChimpForm']) && \is_array($GLOBALS['TL_HOOKS']['modifyMailChimpForm'])) {
-            foreach ($GLOBALS['TL_HOOKS']['modifyMailChimpForm'] as $callback) {
-                $this->import($callback[0]);
-                $this->{$callback[0]}->{$callback[1]}($objForm, $this);
-            }
-        }
+        // event: modify form
+        System::getContainer()->get('event_dispatcher')->dispatch(
+            ModifyFormEvent::SUBSCRIBE, 
+            new ModifyFormEvent($objForm, $this)
+        );
 
         $this->Template->error = false;
 

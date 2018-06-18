@@ -72,6 +72,12 @@ class ModuleUnsubscribe extends Module
 
         $objForm->addContaoHiddenFields();
 
+        // event: modify form
+        System::getContainer()->get('event_dispatcher')->dispatch(
+            ModifyFormEvent::UNSUBSCRIBE, 
+            new ModifyFormEvent($objForm, $this)
+        );
+
         $this->Template->error = false;
 
         if ($objForm->validate()) {
