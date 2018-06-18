@@ -1,6 +1,6 @@
 {
     "name": "oneup/contao-mailchimp",
-    "type": "contao-module",
+    "type": "contao-bundle",
     "description": "This extension connects a Contao installation with MailChimp.",
     "keywords": [
         "contao",
