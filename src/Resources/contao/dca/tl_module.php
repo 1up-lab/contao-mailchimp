@@ -28,6 +28,8 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['mailchimpList'] = [
     'foreignKey' => 'tl_mailchimp.listName',
     'eval' => [
         'mandatory' => true,
+        'submitOnChange' => true,
+        'includeBlankOption' => true,
     ],
     'sql' => "varchar(128) NOT NULL default ''",
 ];
@@ -66,9 +68,11 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['mailchimpShowPlaceholder'] = [
 $GLOBALS['TL_DCA']['tl_module']['fields']['mailchimpMandatoryInterests'] = [
     'label' => &$GLOBALS['TL_LANG']['tl_module']['mailchimpMandatoryInterests'],
     'inputType' => 'checkbox',
+    'options_callback' => [Oneup\Contao\MailChimpBundle\EventListener\DcaListener::class, 'onLoadInterests'],
     'eval' => [
         'mandatory' => false,
         'isBoolean' => true,
+        'multiple' => true,
     ],
-    'sql' => "varchar(1) NOT NULL default ''",
+    'sql' => "blob NULL",
 ];

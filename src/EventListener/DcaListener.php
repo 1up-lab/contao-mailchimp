@@ -97,4 +97,28 @@ class DcaListener
             Controller::redirect('contao/main.php?act=error');
         }
     }
+
+    public function onLoadInterests($dc)
+    {
+        if ($dc && $dc->activeRecord && $dc->activeRecord->mailchimpList) {
+
+            if (null !== ($record = MailChimpModel::findByPk($dc->activeRecord->mailchimpList))) {
+
+                if (!empty($record->groups) && ($groups = json_decode($record->groups))) {
+
+                    $options = [];
+
+                    foreach ($groups as $group) {
+                        if ('hidden' !== $group->type) {
+                            $options[$group->id] = $group->title;
+                        }
+                    }
+
+                    return $options;
+                }
+            }
+        }
+
+        return [];
+    }
 }
