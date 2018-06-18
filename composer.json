@@ -1,49 +1,54 @@
 {
-  "name":"oneup/contao-mailchimp",
-  "description":"This extension connects a Contao installation with MailChimp.",
-  "keywords":["contao", "mailchimp", "email", "marketing", "services"],
-  "type":"contao-module",
-  "homepage":"http://1up.io",
-  "license":"MIT",
-  "authors":[
-    {
-      "name":"David Greminger",
-      "email":"dg@1up.io",
-      "homepage":"http://1up.io",
-      "role":"Developer"
+    "name": "oneup/contao-mailchimp",
+    "type": "contao-module",
+    "description": "This extension connects a Contao installation with MailChimp.",
+    "keywords": [
+        "contao",
+        "mailchimp",
+        "email",
+        "marketing",
+        "services"
+    ],
+    "homepage": "https://1up.io",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "David Greminger",
+            "email": "dg@1up.io",
+            "homepage": "https://1up.io",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=7.1",
+        "codefog/contao-haste": "^4.0",
+        "contao/core-bundle": "^4.0",
+        "oneup/mailchimp-api-v3": "^2.2",
+        "patchwork/utf8": "^1.3"
+    },
+    "require-dev": {
+        "contao/manager-plugin": "^2.0",
+        "phpunit/phpunit": "~4.0",
+        "leofeyer/optimize-native-functions-fixer": "^1.0"
+    },
+    "extra": {
+        "contao-manager-plugin": "Oneup\\Contao\\MailChimpBundle\\ContaoManager\\Plugin"
+    },
+    "autoload": {
+        "psr-4": {
+            "Oneup\\Contao\\MailChimpBundle\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Oneup\\Contao\\Tests\\": "tests"
+        }
+    },
+    "prefer-stable": true,
+    "support": {
+        "email": "hello@1up.io",
+        "issues": "https://github.com/1up-lab/contao-mailchimp/issues",
+        "irc": "irc://irc.freenode.org/contao.dev",
+        "source": "https://github.com/1up-lab/contao-mailchimp"
     }
-  ],
-  "support":{
-    "email":"hello@1up.io",
-    "issues":"https://github.com/1up-lab/contao-mailchimp/issues",
-    "irc":"irc://irc.freenode.org/contao.dev",
-    "source":"https://github.com/1up-lab/contao-mailchimp"
-  },
-  "require":{
-    "php":">=7.1",
-    "contao/core-bundle":"^4.0",
-    "contao-community-alliance/composer-plugin":"^3.0",
-    "codefog/contao-haste": "^4.0",
-    "patchwork/utf8": "^1.3",
-    "oneup/mailchimp-api-v3": "^2.2"
-  },
-  "require-dev": {
-    "phpunit/phpunit": "~4.0",
-    "contao/manager-plugin": "^2.0"
-  },
-  "autoload": {
-    "psr-4": {
-      "Oneup\\Contao\\MailChimpBundle\\": "src"
-    }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "Oneup\\Contao\\Tests\\": "tests"
-    }
-  },
-  "extra": {
-    "contao-manager-plugin": "Oneup\\Contao\\MailChimpBundle\\ContaoManager\\Plugin"
-  },
-  "minimum-stability": "dev",
-  "prefer-stable": true
 }

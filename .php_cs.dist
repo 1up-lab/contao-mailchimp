@@ -30,6 +30,10 @@ return PhpCsFixer\Config::create()
             'expectedException',
             'expectedExceptionMessage',
         ],
+        'LeoFeyer/optimize_native_functions' => true,
+    ])
+    ->registerCustomFixers([
+        new LeoFeyer\PhpCsFixer\OptimizeNativeFunctionsFixer()
     ])
     ->setFinder($finder)
     ->setRiskyAllowed(true)

@@ -30,7 +30,7 @@ class DcaListener
             $fieldsOffset = 0;
             $fieldsLimit = 10;
 
-            while(!empty(($fieldData = $apiClient->getListFields($listId, $fieldsOffset, $fieldsLimit))->merge_fields)) {
+            while (!empty(($fieldData = $apiClient->getListFields($listId, $fieldsOffset, $fieldsLimit))->merge_fields)) {
                 $fieldsOffset += $fieldsLimit;
 
                 foreach ($fieldData->merge_fields as $rawField) {
@@ -47,9 +47,9 @@ class DcaListener
                     ];
 
                     $fields[] = $field;
-                } 
+                }
             }
-   
+
             $record->fields = json_encode($fields);
 
             // Get interest groups
@@ -57,7 +57,7 @@ class DcaListener
             $categoryOffset = 0;
             $categoryLimit = 10;
 
-            while(!empty(($categoryData = $apiClient->getListGroupCategories($listId, $categoryOffset, $categoryLimit))->categories)) {
+            while (!empty(($categoryData = $apiClient->getListGroupCategories($listId, $categoryOffset, $categoryLimit))->categories)) {
                 $categoryOffset += $categoryLimit;
 
                 foreach ($categoryData->categories as $group) {
@@ -65,14 +65,14 @@ class DcaListener
                     $groupOffset = 0;
                     $groupLimit = 10;
 
-                    while(!empty(($groupData = $apiClient->getListGroup($listId, $group->id, $groupOffset, $groupLimit))->interests)) {
+                    while (!empty(($groupData = $apiClient->getListGroup($listId, $group->id, $groupOffset, $groupLimit))->interests)) {
                         $groupOffset += $groupLimit;
 
                         foreach ($groupData->interests as $interest) {
                             $interests[] = [
                                 'id' => $interest->id,
                                 'name' => $interest->name,
-                                'displayOrder' => $interest->display_order
+                                'displayOrder' => $interest->display_order,
                             ];
                         }
                     }
@@ -81,7 +81,7 @@ class DcaListener
                         'id' => $group->id,
                         'title' => $group->title,
                         'type' => $group->type,
-                        'interests' => $interests
+                        'interests' => $interests,
                     ];
                 }
             }
@@ -104,11 +104,8 @@ class DcaListener
     public function onLoadInterests($dc)
     {
         if ($dc && $dc->activeRecord && $dc->activeRecord->mailchimpList) {
-
             if (null !== ($record = MailChimpModel::findByPk($dc->activeRecord->mailchimpList))) {
-
                 if (!empty($record->groups) && ($groups = json_decode($record->groups))) {
-
                     $options = [];
 
                     foreach ($groups as $group) {

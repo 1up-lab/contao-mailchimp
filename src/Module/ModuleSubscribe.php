@@ -52,7 +52,7 @@ class ModuleSubscribe extends Module
 
         $objForm->setFormActionFromUri(Environment::get('request'));
 
-        if (null === $this->objMailChimp->fields || 0 === strlen($this->objMailChimp->fields)) {
+        if (null === $this->objMailChimp->fields || 0 === \strlen($this->objMailChimp->fields)) {
             /** @var LoggerInterface $logger */
             $logger = System::getContainer()->get('logger');
             $logger->info(
@@ -77,7 +77,7 @@ class ModuleSubscribe extends Module
 
         $mergeVarTags = [];
 
-        if (is_array($fields)) {
+        if (\is_array($fields)) {
             foreach ($fields as $field) {
                 $addedName = $this->addFieldToForm($field, $objForm);
 
@@ -97,7 +97,7 @@ class ModuleSubscribe extends Module
 
         $interestCategoryIds = [];
 
-        if (is_array($groups)) {
+        if (\is_array($groups)) {
             foreach ($groups as $category) {
                 $addedName = $this->addInterestCategoryToForm($category, $objForm);
 
@@ -129,7 +129,7 @@ class ModuleSubscribe extends Module
 
             foreach ($interestCategoryIds as $id) {
                 if (!empty($arrData[$id])) {
-                    if (is_array($arrData[$id])) {
+                    if (\is_array($arrData[$id])) {
                         foreach ($arrData[$id] as $groupId) {
                             $interests[$groupId] = true;
                         }
@@ -199,7 +199,7 @@ class ModuleSubscribe extends Module
 
             // otherwise, append email field
             if (-1 === $email->displayOrder) {
-                $email->displayOrder = (count($fields) + 1);
+                $email->displayOrder = (\count($fields) + 1);
             }
         }
 
@@ -218,7 +218,7 @@ class ModuleSubscribe extends Module
      */
     protected function addFieldToForm(\stdClass $field, Form $form): ?string
     {
-        if (!in_array($field->type, ['text', 'number', 'website', 'address', 'dropdown', 'radio', 'url', 'date', 'birthday', 'phone'], true)) {
+        if (!\in_array($field->type, ['text', 'number', 'website', 'address', 'dropdown', 'radio', 'url', 'date', 'birthday', 'phone'], true)) {
             return null;
         }
 
@@ -377,7 +377,7 @@ class ModuleSubscribe extends Module
      */
     protected function addInterestCategoryToForm(\stdClass $category, Form $form): ?string
     {
-        if (!in_array($category->type, ['checkboxes', 'radio', 'dropdown'], true)) {
+        if (!\in_array($category->type, ['checkboxes', 'radio', 'dropdown'], true)) {
             return null;
         }
 
@@ -391,7 +391,7 @@ class ModuleSubscribe extends Module
         $inputType = str_replace(['checkboxes', 'dropdown'], ['checkbox', 'select'], $category->type);
         $options = [];
         $mandatoryInterests = \deserialize($this->mailchimpMandatoryInterests, true);
-        $eval = ['mandatory' => \in_array($category->id, $mandatoryInterests)];
+        $eval = ['mandatory' => \in_array($category->id, $mandatoryInterests, true)];
 
         foreach ($interests as $interest) {
             $options[$interest->id] = $interest->name;
@@ -409,7 +409,7 @@ class ModuleSubscribe extends Module
             'label' => $category->title,
             'inputType' => $inputType,
             'options' => $options,
-            'eval' => $eval
+            'eval' => $eval,
         ]);
 
         return $category->id;
