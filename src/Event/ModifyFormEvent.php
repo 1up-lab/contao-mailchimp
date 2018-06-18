@@ -18,7 +18,7 @@ class ModifyFormEvent extends Event
     public const SUBSCRIBE = 'contao_mailchimp.modify_subscribe_form';
 
     /**
-     * The contao_mailchimp.modify_unsubscribe_form event is triggered when the subscribe form is finished creating the form object
+     * The contao_mailchimp.modify_unsubscribe_form event is triggered when the unsubscribe form is finished creating the form object
      *
      * @var string
      */
