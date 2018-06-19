@@ -52,28 +52,10 @@ class ModifyFormEvent extends Event
     }
 
     /**
-     * @return ModifyFormEvent
-     */
-    public function setForm(Form $form): ModifyFormEvent
-    {
-        $this->form = $form;
-        return $this;
-    }
-
-    /**
      * @return Module
      */
     public function getModule(): Module
     {
         return $this->module;
-    }
-
-    /**
-     * @return ModifyFormEvent
-     */
-    public function setModule(Module $module): ModifyFormEvent
-    {
-        $this->module = $module;
-        return $this;
     }
 }
