@@ -118,7 +118,7 @@ class ModuleSubscribe extends Module
 
         // event: modify form
         System::getContainer()->get('event_dispatcher')->dispatch(
-            ModifyFormEvent::SUBSCRIBE, 
+            ModifyFormEvent::SUBSCRIBE,
             new ModifyFormEvent($objForm, $this)
         );
 

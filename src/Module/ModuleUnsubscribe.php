@@ -74,7 +74,7 @@ class ModuleUnsubscribe extends Module
 
         // event: modify form
         System::getContainer()->get('event_dispatcher')->dispatch(
-            ModifyFormEvent::UNSUBSCRIBE, 
+            ModifyFormEvent::UNSUBSCRIBE,
             new ModifyFormEvent($objForm, $this)
         );
 
