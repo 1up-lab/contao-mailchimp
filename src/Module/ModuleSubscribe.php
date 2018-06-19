@@ -11,6 +11,7 @@ use Contao\Input;
 use Contao\Module;
 use Contao\System;
 use Haste\Form\Form;
+use Oneup\Contao\MailChimpBundle\Event\ModifyFormEvent;
 use Oneup\Contao\MailChimpBundle\Model\MailChimpModel;
 use Oneup\MailChimp\Client;
 use Oneup\MailChimp\Exception\ApiException;
@@ -114,6 +115,12 @@ class ModuleSubscribe extends Module
         ]);
 
         $objForm->addContaoHiddenFields();
+
+        // event: modify form
+        System::getContainer()->get('event_dispatcher')->dispatch(
+            ModifyFormEvent::SUBSCRIBE, 
+            new ModifyFormEvent($objForm, $this)
+        );
 
         $this->Template->error = false;
 
