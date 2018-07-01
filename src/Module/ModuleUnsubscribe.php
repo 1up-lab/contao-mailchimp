@@ -10,6 +10,7 @@ use Contao\Input;
 use Contao\Module;
 use Contao\System;
 use Haste\Form\Form;
+use Oneup\Contao\MailChimpBundle\Event\ModifyFormEvent;
 use Oneup\Contao\MailChimpBundle\Model\MailChimpModel;
 use Oneup\MailChimp\Client;
 use Patchwork\Utf8;
