@@ -15,7 +15,7 @@ The fields that will be shown are managed through MailChimp's [`List fields and 
 
 Install using the command line `composer require oneup/contao-mailchimp` or by using the [Contao Manager](https://contao.org/de/download.html).
 
-### Require of oneup/contao-mailchimp
+### Requires of oneup/contao-mailchimp (Composer resolves this automatically)
 
 - [codefog/contao-haste](https://github.com/codefog/contao-haste)
 - [contao/core-bundle](https://github.com/contao/core-bundle)
@@ -40,17 +40,17 @@ Create four pages under Layout > Site Structure:
 
 Go to Layout > Themes > Modules:
 
-- Add a module of the type **Subscirbe form**
+- Add a module of the type **Subscribe form**
 - Choose your MailChimp List
-- Choose the redirection page after subscription
+- Choose the redirection page after subscription (Page: Subscribe to the newsletter)
 - Choose whether you will use double opt-in for subscription
 - Choose whether you will use the HTML5-Placeholder in the form fields or not
 - Add a module of the type **Unsubscribe form**
 - Choose your MailChimp List
-- Choose the redirection page after unsubscription
+- Choose the redirection page after unsubscription (Unsubscribe from the newsletter)
 - Choose whether you will use the HTML5-Placeholder in the form fields or not
 
 Go to Content > Articles:
 
-- Insert the module of the type **Subscirbe form** on the page Subscribe to the newsletter
+- Insert the module of the type **Subscribe form** on the page Subscribe to the newsletter
 - Insert the module of the type **Unsubscribe form** on the page Unsubscribe from the newsletter
