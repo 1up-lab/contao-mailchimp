@@ -68,7 +68,11 @@ class ModuleSubscribe extends Module
             return;
         }
 
-        $fields = json_decode($this->objMailChimp->fields);
+        $fields = [];
+
+        if (null !== $this->objMailChimp->fields) {
+            $fields = json_decode($this->objMailChimp->fields);
+        }
 
         // sort fields by displayOrder ASC
         usort($fields, function ($a, $b) {
@@ -89,10 +93,14 @@ class ModuleSubscribe extends Module
             }
         }
 
-        // add the interest groups
-        $groups = json_decode($this->objMailChimp->groups);
+        $groups = [];
 
-        // sort categories by displayOrder ASC
+        if (null !== $this->objMailChimp->groups) {
+            // add the interest groups
+            $groups = json_decode($this->objMailChimp->groups);
+        }
+
+        // sort groups by displayOrder ASC
         usort($groups, function ($a, $b) {
             return ($a->displayOrder > $b->displayOrder) ? 1 : -1;
         });
