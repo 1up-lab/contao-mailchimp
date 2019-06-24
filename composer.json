@@ -23,7 +23,7 @@
         "ext-json": "*",
         "php": ">=7.1",
         "codefog/contao-haste": "^4.0",
-        "contao/core-bundle": "^4.0",
+        "contao/core-bundle": "^4.4",
         "oneup/mailchimp-api-v3": "^2.2",
         "patchwork/utf8": "^1.3"
     },

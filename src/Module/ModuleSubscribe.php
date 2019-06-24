@@ -56,7 +56,7 @@ class ModuleSubscribe extends Module
 
         if (null === $this->objMailChimp->fields || 0 === \strlen($this->objMailChimp->fields)) {
             /** @var LoggerInterface $logger */
-            $logger = System::getContainer()->get('logger');
+            $logger = System::getContainer()->get('monolog.logger.contao');
             $logger->info(
                 'No MailChimp fields found. Did you configure your settings correctly?',
                 ['contao' => new ContaoContext(__METHOD__, ContaoContext::ACCESS)]
