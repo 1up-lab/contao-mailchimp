@@ -6,7 +6,7 @@ namespace Oneup\Contao\MailChimpBundle\Event;
 
 use Contao\Module;
 use Haste\Form\Form;
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Contracts\EventDispatcher\Event;
 
 class ModifyFormEvent extends Event
 {
@@ -34,26 +34,17 @@ class ModifyFormEvent extends Event
      */
     private $module;
 
-    /**
-     * @param Form $form
-     */
     public function __construct(Form $form, Module $module)
     {
         $this->form = $form;
         $this->module = $module;
     }
 
-    /**
-     * @return Form
-     */
     public function getForm(): Form
     {
         return $this->form;
     }
 
-    /**
-     * @return Module
-     */
     public function getModule(): Module
     {
         return $this->module;
