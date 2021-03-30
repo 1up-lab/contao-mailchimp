@@ -184,10 +184,6 @@ class ModuleSubscribe extends Module
 
     /**
      * Locates the position of the email field within the array of fields and inserts it.
-     *
-     * @param array $fields
-     *
-     * @return array
      */
     protected function insertEmailField(array $fields): array
     {
@@ -231,11 +227,6 @@ class ModuleSubscribe extends Module
 
     /**
      * Return the name of the field.
-     *
-     * @param \stdClass $field
-     * @param Form      $form
-     *
-     * @return null|string
      */
     protected function addFieldToForm(\stdClass $field, Form $form): ?string
     {
@@ -390,11 +381,6 @@ class ModuleSubscribe extends Module
 
     /**
      * Return the name of the field.
-     *
-     * @param \stdClass $category
-     * @param Form      $form
-     *
-     * @return null|string
      */
     protected function addInterestCategoryToForm(\stdClass $category, Form $form): ?string
     {
@@ -411,7 +397,7 @@ class ModuleSubscribe extends Module
 
         $inputType = str_replace(['checkboxes', 'dropdown'], ['checkbox', 'select'], $category->type);
         $options = [];
-        $mandatoryInterests = \deserialize($this->mailchimpMandatoryInterests, true);
+        $mandatoryInterests = deserialize($this->mailchimpMandatoryInterests, true);
         $eval = ['mandatory' => \in_array($category->id, $mandatoryInterests, true)];
 
         foreach ($interests as $interest) {
