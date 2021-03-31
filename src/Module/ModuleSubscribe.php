@@ -9,6 +9,7 @@ use Contao\CoreBundle\Monolog\ContaoContext;
 use Contao\Environment;
 use Contao\Input;
 use Contao\Module;
+use Contao\StringUtil;
 use Contao\System;
 use Haste\Form\Form;
 use Oneup\Contao\MailChimpBundle\Event\ModifyFormEvent;
@@ -17,6 +18,7 @@ use Oneup\MailChimp\Client;
 use Oneup\MailChimp\Exception\ApiException;
 use Patchwork\Utf8;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class ModuleSubscribe extends Module
 {
@@ -54,7 +56,7 @@ class ModuleSubscribe extends Module
 
         $objForm->setFormActionFromUri(Environment::get('request'));
 
-        if (null === $this->objMailChimp->fields || 0 === \strlen($this->objMailChimp->fields)) {
+        if (null === $this->objMailChimp->fields || '' === $this->objMailChimp->fields) {
             /** @var LoggerInterface $logger */
             $logger = System::getContainer()->get('monolog.logger.contao');
             $logger->info(
@@ -75,7 +77,7 @@ class ModuleSubscribe extends Module
         }
 
         // sort fields by displayOrder ASC
-        usort($fields, function ($a, $b) {
+        usort($fields, static function ($a, $b) {
             return ($a->displayOrder > $b->displayOrder) ? 1 : -1;
         });
 
@@ -125,10 +127,9 @@ class ModuleSubscribe extends Module
         $objForm->addContaoHiddenFields();
 
         // event: modify form
-        System::getContainer()->get('event_dispatcher')->dispatch(
-            ModifyFormEvent::SUBSCRIBE,
-            new ModifyFormEvent($objForm, $this)
-        );
+        /** @var EventDispatcherInterface $eventDispatcher */
+        $eventDispatcher = System::getContainer()->get('event_dispatcher');
+        $eventDispatcher->dispatch(new ModifyFormEvent($objForm, $this), ModifyFormEvent::SUBSCRIBE);
 
         $this->Template->error = false;
 
@@ -397,7 +398,7 @@ class ModuleSubscribe extends Module
 
         $inputType = str_replace(['checkboxes', 'dropdown'], ['checkbox', 'select'], $category->type);
         $options = [];
-        $mandatoryInterests = deserialize($this->mailchimpMandatoryInterests, true);
+        $mandatoryInterests = StringUtil::deserialize($this->mailchimpMandatoryInterests, true);
         $eval = ['mandatory' => \in_array($category->id, $mandatoryInterests, true)];
 
         foreach ($interests as $interest) {

@@ -14,6 +14,7 @@ use Oneup\Contao\MailChimpBundle\Event\ModifyFormEvent;
 use Oneup\Contao\MailChimpBundle\Model\MailChimpModel;
 use Oneup\MailChimp\Client;
 use Patchwork\Utf8;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class ModuleUnsubscribe extends Module
 {
@@ -74,10 +75,9 @@ class ModuleUnsubscribe extends Module
         $objForm->addContaoHiddenFields();
 
         // event: modify form
-        System::getContainer()->get('event_dispatcher')->dispatch(
-            ModifyFormEvent::UNSUBSCRIBE,
-            new ModifyFormEvent($objForm, $this)
-        );
+        /** @var EventDispatcherInterface $eventDispatcher */
+        $eventDispatcher = System::getContainer()->get('event_dispatcher');
+        $eventDispatcher->dispatch(new ModifyFormEvent($objForm, $this), ModifyFormEvent::UNSUBSCRIBE);
 
         $this->Template->error = false;
 
