@@ -93,7 +93,7 @@ class FormSubscriptionListener
         $mergeTags = StringUtil::deserialize($value, true);
 
         foreach ($mergeTags as $mergeTag) {
-            if ('EMAIL' === $mergeTag['key'] ?? null && !empty($mergeTag['value'])) {
+            if ('EMAIL' === ($mergeTag['key'] ?? null) && !empty($mergeTag['value'])) {
                 return $value;
             }
         }
