@@ -8,3 +8,7 @@ services:
         arguments:
             - '@logger'
             - '@translator'
+        tags:
+            - { name: contao.callback, table: tl_form, target: fields.mailchimpGroups.options, method: onMailchimpGroupsOptionsCallback }
+            - { name: contao.callback, table: tl_form, target: fields.mailchimpMergeTags.save, method: onMailchimpMergeTagsSaveCallback }
+            - { name: contao.hook, hook: processFormData }
