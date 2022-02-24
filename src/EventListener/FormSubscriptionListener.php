@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace Oneup\Contao\MailChimpBundle\EventListener;
 
 use Contao\CoreBundle\Monolog\ContaoContext;
-use Contao\CoreBundle\ServiceAnnotation\Callback;
-use Contao\CoreBundle\ServiceAnnotation\Hook;
 use Contao\DataContainer;
 use Contao\Form;
 use Contao\StringUtil;
@@ -38,10 +36,8 @@ class FormSubscriptionListener
     }
 
     /**
-     * Returns the list of group categories from the Mailchimp API 
+     * Returns the list of group categories from the Mailchimp API
      * for the currently selected Mailchimp list.
-     * 
-     * @Callback(table="tl_form", target="fields.mailchimpGroups.options")
      */
     public function onMailchimpGroupsOptionsCallback(DataContainer $dc): array
     {
@@ -82,9 +78,7 @@ class FormSubscriptionListener
 
     /**
      * Checks whether the merge tags have at least "EMAIL".
-     * 
-     * @Callback(table="tl_form", target="fields.mailchimpMergeTags.save")
-     * 
+     *
      * @param mixed $value
      * @return mixed
      */
@@ -103,8 +97,6 @@ class FormSubscriptionListener
 
     /**
      * Subscribes to a Mailchimp list if enabled.
-     * 
-     * @Hook("processFormData")
      */
     public function onProcessFormData(array $submittedData, array $formData, ?array $files, array $labels, Form $form): void
     {
