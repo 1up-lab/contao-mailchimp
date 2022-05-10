@@ -140,7 +140,19 @@ class FormSubscriptionListener
         if ($result) {
             $this->logger->log(LogLevel::INFO, sprintf('Successfully subscribed "%s" to Mailchimp list "%s".', $email, $model->listName), ['contao' => new ContaoContext(__METHOD__, TL_GENERAL)]);
         } else {
-            $this->logger->log(LogLevel::INFO, sprintf('Could not subscribe "%s" to Mailchimp list "%s".', $email, $model->listName), ['contao' => new ContaoContext(__METHOD__, TL_ERROR)]);
+            $msg = sprintf('Could not subscribe "%s" to Mailchimp list "%s".', $email, $model->listName);
+
+            if ($lastError = $api->getLastError()) {
+                if ($lastError->detail ?? null) {
+                    $msg .= ' '.$lastError->detail;
+                }
+
+                foreach ($lastError->errors ?? [] as $error) {
+                    $msg .= ' '.implode(': ', (array) $error).'.';
+                }
+            }
+
+            $this->logger->log(LogLevel::INFO, $msg, ['contao' => new ContaoContext(__METHOD__, TL_ERROR)]);
         }
     }
 }
