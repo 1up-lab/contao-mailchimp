@@ -54,3 +54,15 @@ Go to Content > Articles:
 
 - Insert the module of the type **Subscribe form** on the page Subscribe to the newsletter
 - Insert the module of the type **Unsubscribe form** on the page Unsubscribe from the newsletter
+
+### Form Generator
+
+You can also use forms of the form generator to subscribe to Mailchimp lists.
+
+- Go to the settings of the form.
+- In the _Mailchimp_ section **Enable Mailchimp**.
+- Select a _Mailchimp list_ to subscribe to.
+- Optionally select interest groups that new subscriptions should be assigned to by default.
+- Optionally enter the name of a field which controls whether the subscription should take place or not (e.g. the field name of a newsletter checkbox).
+- Optionally enable Mailchimp's double opt-in feature.
+- Define the merge tags to map the form's input to the mailchimp list's fields. _Note:_ you always need an `EMAIL` merge tag.
