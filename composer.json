@@ -21,7 +21,7 @@
     ],
     "require": {
         "ext-json": "*",
-        "php": ">=7.1",
+        "php": ">=7.1||^8.0",
         "codefog/contao-haste": "^4.0",
         "contao/core-bundle": "^4.9",
         "oneup/mailchimp-api-v3": "^2.4",
