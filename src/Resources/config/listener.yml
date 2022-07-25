@@ -2,6 +2,8 @@ services:
     oneup_contao_mailchimp.listener.dca:
         class: Oneup\Contao\MailChimpBundle\EventListener\DcaListener
         public: true
+        arguments:
+            - '@logger'
 
     Oneup\Contao\MailChimpBundle\EventListener\FormSubscriptionListener:
         autoconfigure: true

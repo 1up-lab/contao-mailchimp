@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 $GLOBALS['TL_DCA']['tl_module']['palettes']['mailchimp_subscribe'] = '
     {title_legend},name,headline,type;
     {list_legend},mailchimpList;
@@ -74,5 +76,5 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['mailchimpMandatoryInterests'] = [
         'isBoolean' => true,
         'multiple' => true,
     ],
-    'sql' => "blob NULL",
+    'sql' => 'blob NULL',
 ];

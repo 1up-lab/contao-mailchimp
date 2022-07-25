@@ -34,7 +34,7 @@ class ModuleSubscribe extends Module
         if (TL_MODE === 'BE') {
             /** @var BackendTemplate|object $objTemplate */
             $objTemplate = new BackendTemplate('be_wildcard');
-            $objTemplate->wildcard = '### '.Utf8::strtoupper($GLOBALS['TL_LANG']['FMD']['mailchimp_subscribe'][0]).' ###';
+            $objTemplate->wildcard = '### ' . Utf8::strtoupper($GLOBALS['TL_LANG']['FMD']['mailchimp_subscribe'][0]) . ' ###';
 
             return $objTemplate->parse();
         }
@@ -50,9 +50,7 @@ class ModuleSubscribe extends Module
     {
         System::loadLanguageFile('tl_module');
 
-        $objForm = new Form('mailchimp-subscribe-'.$this->id, 'POST', function (Form $objHaste) {
-            return Input::post('FORM_SUBMIT') === $objHaste->getFormId();
-        });
+        $objForm = new Form('mailchimp-subscribe-' . $this->id, 'POST', fn (Form $objHaste) => Input::post('FORM_SUBMIT') === $objHaste->getFormId());
 
         $objForm->setFormActionFromUri(Environment::get('request'));
 
@@ -77,9 +75,7 @@ class ModuleSubscribe extends Module
         }
 
         // sort fields by displayOrder ASC
-        usort($fields, static function ($a, $b) {
-            return ($a->displayOrder > $b->displayOrder) ? 1 : -1;
-        });
+        usort($fields, static fn ($a, $b) => ($a->displayOrder > $b->displayOrder) ? 1 : -1);
 
         $fields = $this->insertEmailField($fields);
 
@@ -103,9 +99,7 @@ class ModuleSubscribe extends Module
         }
 
         // sort groups by displayOrder ASC
-        usort($groups, function ($a, $b) {
-            return ($a->displayOrder > $b->displayOrder) ? 1 : -1;
-        });
+        usort($groups, fn ($a, $b) => ($a->displayOrder > $b->displayOrder) ? 1 : -1);
 
         $interestCategoryIds = [];
 
@@ -221,7 +215,7 @@ class ModuleSubscribe extends Module
             }
         }
 
-        array_splice($fields, ($email->displayOrder - 1), 0, [$email]);
+        array_splice($fields, $email->displayOrder - 1, 0, [$email]);
 
         return $fields;
     }
@@ -392,9 +386,7 @@ class ModuleSubscribe extends Module
         $interests = $category->interests;
 
         // sort interests by displayOrder ASC
-        usort($interests, function ($a, $b) {
-            return ($a->displayOrder > $b->displayOrder) ? 1 : -1;
-        });
+        usort($interests, fn ($a, $b) => ($a->displayOrder > $b->displayOrder) ? 1 : -1);
 
         $inputType = str_replace(['checkboxes', 'dropdown'], ['checkbox', 'select'], $category->type);
         $options = [];

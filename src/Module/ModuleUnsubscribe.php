@@ -30,7 +30,7 @@ class ModuleUnsubscribe extends Module
         if (TL_MODE === 'BE') {
             /** @var BackendTemplate|object $objTemplate */
             $objTemplate = new BackendTemplate('be_wildcard');
-            $objTemplate->wildcard = '### '.Utf8::strtoupper($GLOBALS['TL_LANG']['FMD']['mailchimp_unsubscribe'][0]).' ###';
+            $objTemplate->wildcard = '### ' . Utf8::strtoupper($GLOBALS['TL_LANG']['FMD']['mailchimp_unsubscribe'][0]) . ' ###';
 
             return $objTemplate->parse();
         }
@@ -46,9 +46,7 @@ class ModuleUnsubscribe extends Module
     {
         System::loadLanguageFile('tl_module');
 
-        $objForm = new Form('mailchimp-unsubscribe-'.$this->id, 'POST', function (Form $objHaste) {
-            return Input::post('FORM_SUBMIT') === $objHaste->getFormId();
-        });
+        $objForm = new Form('mailchimp-unsubscribe-' . $this->id, 'POST', fn (Form $objHaste) => Input::post('FORM_SUBMIT') === $objHaste->getFormId());
 
         $objForm->setFormActionFromUri(Environment::get('request'));
 

@@ -19,15 +19,8 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class FormSubscriptionListener
 {
-    /**
-     * @var LoggerInterface
-     */
-    private $logger;
-
-    /**
-     * @var TranslatorInterface
-     */
-    private $translator;
+    private LoggerInterface $logger;
+    private TranslatorInterface $translator;
 
     public function __construct(LoggerInterface $logger, TranslatorInterface $translator)
     {
@@ -80,6 +73,7 @@ class FormSubscriptionListener
      * Checks whether the merge tags have at least "EMAIL".
      *
      * @param mixed $value
+     *
      * @return mixed
      */
     public function onMailchimpMergeTagsSaveCallback($value, DataContainer $dc)
@@ -144,11 +138,11 @@ class FormSubscriptionListener
 
             if ($lastError = $api->getLastError()) {
                 if ($lastError->detail ?? null) {
-                    $msg .= ' '.$lastError->detail;
+                    $msg .= ' ' . $lastError->detail;
                 }
 
                 foreach ($lastError->errors ?? [] as $error) {
-                    $msg .= ' '.implode(': ', (array) $error).'.';
+                    $msg .= ' ' . implode(': ', (array) $error) . '.';
                 }
             }
 
