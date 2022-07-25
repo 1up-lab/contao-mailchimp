@@ -28,8 +28,8 @@ $GLOBALS['TL_DCA']['tl_form']['fields']['mailchimpList'] = [
 $GLOBALS['TL_DCA']['tl_form']['fields']['mailchimpGroups'] = [
     'inputType' => 'checkbox',
     'eval' => [
-        'tl_class' => 'clr', 
-        'includeBlankOption' => true, 
+        'tl_class' => 'clr',
+        'includeBlankOption' => true,
         'multiple' => true,
     ],
     'sql' => ['type' => 'blob', 'notnull' => false],

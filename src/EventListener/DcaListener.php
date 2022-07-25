@@ -5,21 +5,29 @@ declare(strict_types=1);
 namespace Oneup\Contao\MailChimpBundle\EventListener;
 
 use Contao\Controller;
-use Contao\DC_Table;
-use Contao\System;
+use Contao\CoreBundle\Monolog\ContaoContext;
+use Contao\DataContainer;
 use Oneup\Contao\MailChimpBundle\Model\MailChimpModel;
 use Oneup\MailChimp\Client as ApiClient;
 use Oneup\MailChimp\Exception\ApiException;
+use Psr\Log\LoggerInterface;
+use Psr\Log\LogLevel;
 
 class DcaListener
 {
-    public static function onSaveListFields(DC_Table $dcTable): void
+    private LoggerInterface $logger;
+
+    public function __construct(LoggerInterface $logger)
     {
-        $record = MailChimpModel::findByPk($dcTable->activeRecord->id);
+        $this->logger = $logger;
+    }
+
+    public function onSaveListFields(DataContainer $dataContainer): void
+    {
+        $record = MailChimpModel::findByPk($dataContainer->activeRecord->id);
 
         $listId = $record->listId;
         $apiKey = $record->listApiKey;
-        $fieldData = null;
 
         // Create new Api Client
         $apiClient = new ApiClient($apiKey);
@@ -91,17 +99,17 @@ class DcaListener
             // Save the record
             $record->save();
         } catch (ApiException $e) {
-            System::log(
+            $this->logger->log(
+                LogLevel::ERROR,
                 sprintf('There was an error with the MailChimp API: %s', $e->getMessage()),
-                __METHOD__,
-                TL_ERROR
+                ['contao' => new ContaoContext(__METHOD__, 'ERROR')]
             );
 
             Controller::redirect('contao/main.php?act=error');
         }
     }
 
-    public function onLoadInterests($dc)
+    public function onLoadInterests($dc): array
     {
         if ($dc && $dc->activeRecord && $dc->activeRecord->mailchimpList) {
             if (null !== ($record = MailChimpModel::findByPk($dc->activeRecord->mailchimpList))) {
