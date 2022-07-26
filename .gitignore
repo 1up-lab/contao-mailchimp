@@ -19,6 +19,7 @@ composer.phar
 # Tests
 tests/
 phpunit.xml.dist
+.phpunit.result.cache
 # Transifex
 /.tx/
 
