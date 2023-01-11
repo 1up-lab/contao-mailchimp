@@ -127,6 +127,12 @@ class FormSubscriptionListener
             return;
         }
 
+        // Extract member tags
+        $memberTags = [];
+        foreach (StringUtil::deserialize($form->mailchimpMemberTags, true) as $memberTag) {
+            $memberTags[$memberTag['key']] = $submittedData[$memberTag['value']] ?? null;
+        }
+
         $api = new Client($model->listApiKey);
         $email = $mergeVars['EMAIL'];
         $result = $api->subscribeToList($model->listId, $email, $mergeVars, (bool) $form->mailchimpOptIn, $interests);
@@ -134,19 +140,30 @@ class FormSubscriptionListener
         if ($result) {
             $this->logger->log(LogLevel::INFO, sprintf('Successfully subscribed "%s" to Mailchimp list "%s".', $email, $model->listName), ['contao' => new ContaoContext(__METHOD__, TL_GENERAL)]);
         } else {
-            $msg = sprintf('Could not subscribe "%s" to Mailchimp list "%s".', $email, $model->listName);
-
-            if ($lastError = $api->getLastError()) {
-                if ($lastError->detail ?? null) {
-                    $msg .= ' ' . $lastError->detail;
-                }
-
-                foreach ($lastError->errors ?? [] as $error) {
-                    $msg .= ' ' . implode(': ', (array) $error) . '.';
-                }
-            }
-
-            $this->logger->log(LogLevel::INFO, $msg, ['contao' => new ContaoContext(__METHOD__, TL_ERROR)]);
+            $this->handleError(sprintf('Could not subscribe "%s" to Mailchimp list "%s".', $email, $model->listName), $api->getLastError());
         }
+
+        if (\count($memberTags)) {
+            $result = $api->addOrRemoveMemberTags($model->listId, $email, $memberTags);
+
+            if ($result) {
+                $this->logger->log(LogLevel::INFO, sprintf('Successfully added/removed tags from "%s".', $email), ['contao' => new ContaoContext(__METHOD__, TL_GENERAL)]);
+            } else {
+                $this->handleError(sprintf('Could not modify tags for "%s".', $email), $api->getLastError());
+            }
+        }
+    }
+
+    private function handleError(string $message, object $lastError): void
+    {
+        if ($lastError->detail ?? null) {
+            $message .= ' ' . $lastError->detail;
+        }
+
+        foreach ($lastError->errors ?? [] as $error) {
+            $message .= ' ' . implode(': ', (array) $error) . '.';
+        }
+
+        $this->logger->log(LogLevel::INFO, $message, ['contao' => new ContaoContext(__METHOD__, TL_ERROR)]);
     }
 }
