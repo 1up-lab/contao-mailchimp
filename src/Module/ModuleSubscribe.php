@@ -279,7 +279,7 @@ class ModuleSubscribe extends Module
                     'label' => $field->name,
                     'inputType' => $inputType,
                     'eval' => $eval,
-                    'default' => $field->default,
+                    'default' => $field->default ?? '',
                 ]);
 
                 break;
@@ -298,7 +298,7 @@ class ModuleSubscribe extends Module
                     'eval' => [
                         'mandatory' => $field->required,
                     ],
-                    'default' => $field->default,
+                    'default' => $field->default ?? '',
                 ]);
 
                 break;
@@ -317,7 +317,7 @@ class ModuleSubscribe extends Module
                     'eval' => [
                         'mandatory' => $field->required,
                     ],
-                    'default' => $field->default,
+                    'default' => $field->default ?? '',
                 ]);
 
                 break;
@@ -342,7 +342,7 @@ class ModuleSubscribe extends Module
                     'label' => $field->name,
                     'inputType' => $inputType,
                     'eval' => $eval,
-                    'default' => $field->default,
+                    'default' => $field->default ?? '',
                 ]);
 
                 break;
@@ -367,7 +367,7 @@ class ModuleSubscribe extends Module
                     'label' => $field->name,
                     'inputType' => $inputType,
                     'eval' => $eval,
-                    'default' => $field->default,
+                    'default' => $field->default ?? '',
                 ]);
 
                 break;
