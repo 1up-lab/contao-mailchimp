@@ -261,7 +261,9 @@ class ModuleSubscribe extends Module
                     'mandatory' => $field->required,
                 ];
 
-                if (($maxLength = (int) $field->options->size) > 0) {
+                if (property_exists($field, 'options') &&
+                    property_exists($field->options, 'size') &&
+                    ($maxLength = (int) $field->options->size) > 0) {
                     $eval['maxlength'] = $maxLength;
                 }
 
@@ -277,7 +279,7 @@ class ModuleSubscribe extends Module
                     'label' => $field->name,
                     'inputType' => $inputType,
                     'eval' => $eval,
-                    'default' => $field->default,
+                    'default' => $field->default ?? '',
                 ]);
 
                 break;
@@ -296,7 +298,7 @@ class ModuleSubscribe extends Module
                     'eval' => [
                         'mandatory' => $field->required,
                     ],
-                    'default' => $field->default,
+                    'default' => $field->default ?? '',
                 ]);
 
                 break;
@@ -315,7 +317,7 @@ class ModuleSubscribe extends Module
                     'eval' => [
                         'mandatory' => $field->required,
                     ],
-                    'default' => $field->default,
+                    'default' => $field->default ?? '',
                 ]);
 
                 break;
@@ -340,7 +342,7 @@ class ModuleSubscribe extends Module
                     'label' => $field->name,
                     'inputType' => $inputType,
                     'eval' => $eval,
-                    'default' => $field->default,
+                    'default' => $field->default ?? '',
                 ]);
 
                 break;
@@ -365,7 +367,7 @@ class ModuleSubscribe extends Module
                     'label' => $field->name,
                     'inputType' => $inputType,
                     'eval' => $eval,
-                    'default' => $field->default,
+                    'default' => $field->default ?? '',
                 ]);
 
                 break;
