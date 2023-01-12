@@ -53,6 +53,12 @@ $GLOBALS['TL_DCA']['tl_form']['fields']['mailchimpOptIn'] = [
     'sql' => ['type' => 'boolean', 'default' => false],
 ];
 
+$GLOBALS['TL_DCA']['tl_form']['fields']['mailchimpMemberTags'] = [
+    'inputType' => 'keyValueWizard',
+    'eval' => ['tl_class' => 'clr'],
+    'sql' => ['type' => 'blob', 'notnull' => false],
+];
+
 PaletteManipulator::create()
     ->addLegend('mailchimp_legend', null)
     ->addField('enableMailchimp', 'mailchimp_legend', PaletteManipulator::POSITION_APPEND)
@@ -60,4 +66,4 @@ PaletteManipulator::create()
 ;
 
 $GLOBALS['TL_DCA']['tl_form']['palettes']['__selector__'][] = 'enableMailchimp';
-$GLOBALS['TL_DCA']['tl_form']['subpalettes']['enableMailchimp'] = 'mailchimpList,mailchimpGroups,mailchimpConfirmField,mailchimpOptIn,mailchimpMergeTags';
+$GLOBALS['TL_DCA']['tl_form']['subpalettes']['enableMailchimp'] = 'mailchimpList,mailchimpGroups,mailchimpConfirmField,mailchimpOptIn,mailchimpMergeTags,mailchimpMemberTags';

@@ -9,3 +9,4 @@ $GLOBALS['TL_LANG']['tl_form']['mailchimpGroups'] = ['Interest groups', 'Select 
 $GLOBALS['TL_LANG']['tl_form']['mailchimpMergeTags'] = ['Merge tags', 'Define the merge tags for this form. The "Key" is the merge tag while the "Value" is the form field holding the value.'];
 $GLOBALS['TL_LANG']['tl_form']['mailchimpConfirmField'] = ['Confirm field', 'Set an optional form field that is required to be set in order to initiate the subscription process.'];
 $GLOBALS['TL_LANG']['tl_form']['mailchimpOptIn'] = ['Use double opt-in', 'Use double opt-in for the subscription.'];
+$GLOBALS['TL_LANG']['tl_form']['mailchimpMemberTags'] = ['Member tags', 'Define the member tags for this form. The "Key" is the tag while the "Value" is "active" (add tag) or "inactive" (remove tag).'];
