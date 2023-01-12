@@ -66,4 +66,4 @@ PaletteManipulator::create()
 ;
 
 $GLOBALS['TL_DCA']['tl_form']['palettes']['__selector__'][] = 'enableMailchimp';
-$GLOBALS['TL_DCA']['tl_form']['subpalettes']['enableMailchimp'] = 'mailchimpList,mailchimpGroups,mailchimpConfirmField,mailchimpOptIn,mailchimpMergeTags,mailchimMemberTags';
+$GLOBALS['TL_DCA']['tl_form']['subpalettes']['enableMailchimp'] = 'mailchimpList,mailchimpGroups,mailchimpConfirmField,mailchimpOptIn,mailchimpMergeTags,mailchimpMemberTags';
