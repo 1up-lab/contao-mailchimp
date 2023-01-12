@@ -261,7 +261,7 @@ class ModuleSubscribe extends Module
                     'mandatory' => $field->required,
                 ];
 
-                if (($maxLength = (int) $field->options->size) > 0) {
+                if (property_exists($field->options, 'size') && ($maxLength = (int) $field->options->size) > 0) {
                     $eval['maxlength'] = $maxLength;
                 }
 
