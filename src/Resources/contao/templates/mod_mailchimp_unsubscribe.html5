@@ -1,7 +1,7 @@
 
 <div class="<?= $this->class; ?>"<?= $this->cssID; ?>>
     <?php if($this->headline):?><<?= $this->hl ?>><?= $this->headline ?></<?= $this->hl ?>><?php endif;?>
-    <form<?php if ($this->form->action): ?> action="<?= $this->form->action ?>"<?php endif; ?> id="<?= $this->form->formId ?>" method="<?= $this->form->method ?>" enctype="<?= $this->form->enctype ?>"<?= $this->form->attributes ?><?= $this->form->novalidate ?>>
+    <form<?php if ($this->form->action): ?> action="<?= $this->form->action ?>"<?php endif; ?> id="<?= $this->form->formId ?>" method="<?= $this->form->method ?>" enctype="<?= $this->form->enctype ?>" <?php if ($this->form->attributes ?? false): ?><?= $this->form->attributes ?><?php endif ;?> <?php if ($this->form->novalidate ?? false): ?><?= $this->form->novalidate ?><?php endif; ?>>
         <div class="formbody">
             <?php if ($this->error): ?>
                 <p class="error"><?= $this->errorMsg; ?></p>
