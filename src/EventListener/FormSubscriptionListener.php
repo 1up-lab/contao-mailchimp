@@ -130,7 +130,10 @@ class FormSubscriptionListener
         // Extract member tags
         $memberTags = [];
         foreach (StringUtil::deserialize($form->mailchimpMemberTags, true) as $memberTag) {
-            $memberTags[$memberTag['key']] = $submittedData[$memberTag['value']] ?? null;
+            $memberTags[] = [
+                'name' => $memberTag['key'],
+                'status' => $memberTag['value'],
+            ];
         }
 
         $api = new Client($model->listApiKey);
