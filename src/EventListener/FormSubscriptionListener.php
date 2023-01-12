@@ -157,7 +157,7 @@ class FormSubscriptionListener
         }
     }
 
-    private function handleError(string $message, object $lastError): void
+    private function handleError(string $message, object $lastError = null): void
     {
         if ($lastError->detail ?? null) {
             $message .= ' ' . $lastError->detail;
