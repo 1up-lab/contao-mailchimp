@@ -66,3 +66,4 @@ You can also use forms of the form generator to subscribe to Mailchimp lists.
 - Optionally enter the name of a field which controls whether the subscription should take place or not (e.g. the field name of a newsletter checkbox).
 - Optionally enable Mailchimp's double opt-in feature.
 - Define the merge tags to map the form's input to the mailchimp list's fields. _Note:_ you always need an `EMAIL` merge tag.
+- Define optional added member tags.
