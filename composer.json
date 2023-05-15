@@ -22,7 +22,7 @@
     "require": {
         "ext-json": "*",
         "php": "^7.4 || ^8.0",
-        "codefog/contao-haste": "^4.0",
+        "codefog/contao-haste": "^5.0",
         "contao/core-bundle": "^4.9",
         "oneup/mailchimp-api-v3": "^2.7",
         "patchwork/utf8": "^1.3",

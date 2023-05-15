@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Oneup\Contao\MailChimpBundle\Module;
 
+use Codefog\HasteBundle\Form\Form;
 use Contao\BackendTemplate;
 use Contao\Environment;
 use Contao\Input;
 use Contao\Module;
 use Contao\System;
-use Haste\Form\Form;
 use Oneup\Contao\MailChimpBundle\Event\ModifyFormEvent;
 use Oneup\Contao\MailChimpBundle\Model\MailChimpModel;
 use Oneup\MailChimp\Client;
@@ -48,7 +48,7 @@ class ModuleUnsubscribe extends Module
 
         $objForm = new Form('mailchimp-unsubscribe-' . $this->id, 'POST', fn (Form $objHaste) => Input::post('FORM_SUBMIT') === $objHaste->getFormId());
 
-        $objForm->setFormActionFromUri(Environment::get('request'));
+        $objForm->setAction(Environment::get('request'));
 
         $eval = [
             'mandatory' => true,
