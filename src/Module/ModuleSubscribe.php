@@ -11,7 +11,7 @@ use Contao\Input;
 use Contao\Module;
 use Contao\StringUtil;
 use Contao\System;
-use Haste\Form\Form;
+use Codefog\HasteBundle\Form\Form;
 use Oneup\Contao\MailChimpBundle\Event\ModifyFormEvent;
 use Oneup\Contao\MailChimpBundle\Model\MailChimpModel;
 use Oneup\MailChimp\Client;
@@ -52,7 +52,7 @@ class ModuleSubscribe extends Module
 
         $objForm = new Form('mailchimp-subscribe-' . $this->id, 'POST', fn (Form $objHaste) => Input::post('FORM_SUBMIT') === $objHaste->getFormId());
 
-        $objForm->setFormActionFromUri(Environment::get('request'));
+        $objForm->setAction(Environment::get('request'));
 
         if (null === $this->objMailChimp->fields || '' === $this->objMailChimp->fields) {
             /** @var LoggerInterface $logger */
