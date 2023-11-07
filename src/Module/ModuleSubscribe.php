@@ -99,7 +99,7 @@ class ModuleSubscribe extends Module
         }
 
         // sort groups by displayOrder ASC
-        usort($groups, fn ($a, $b) => ($a->displayOrder > $b->displayOrder) ? 1 : -1);
+        usort($groups, fn ($a, $b) => (($a->displayOrder ?? 0) > ($b->displayOrder ?? 0)) ? 1 : -1);
 
         $interestCategoryIds = [];
 
