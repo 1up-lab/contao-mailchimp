@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 $GLOBALS['TL_DCA']['tl_mailchimp'] = [
     'config' => [
-        'dataContainer' => 'Table',
+        'dataContainer' => Contao\DC_Table::class,
         'enableVersioning' => true,
         'onsubmit_callback' => [
             ['oneup_contao_mailchimp.listener.dca', 'onSaveListFields'],
