@@ -4,14 +4,15 @@ declare(strict_types=1);
 
 namespace Oneup\Contao\MailChimpBundle\Module;
 
+use Codefog\HasteBundle\Form\Form;
 use Contao\BackendTemplate;
 use Contao\CoreBundle\Monolog\ContaoContext;
+use Contao\CoreBundle\Routing\ScopeMatcher;
 use Contao\Environment;
 use Contao\Input;
 use Contao\Module;
 use Contao\StringUtil;
 use Contao\System;
-use Codefog\HasteBundle\Form\Form;
 use Oneup\Contao\MailChimpBundle\Event\ModifyFormEvent;
 use Oneup\Contao\MailChimpBundle\Model\MailChimpModel;
 use Oneup\MailChimp\Client;
@@ -19,6 +20,7 @@ use Oneup\MailChimp\Exception\ApiException;
 use Patchwork\Utf8;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 class ModuleSubscribe extends Module
 {
@@ -28,10 +30,22 @@ class ModuleSubscribe extends Module
     protected $mailChimp;
     protected $objMailChimp;
     protected $mailChimpListId;
+    protected ScopeMatcher $scopeMatcher;
+    protected RequestStack $requestStack;
+
+    public function __construct($objModule, $strColumn = 'main')
+    {
+        $this->scopeMatcher = System::getContainer()->get('contao.routing.scope_matcher');
+        $this->requestStack = System::getContainer()->get('request_stack');
+
+        parent::__construct($objModule, $strColumn);
+    }
 
     public function generate(): string
     {
-        if (TL_MODE === 'BE') {
+        $request = $this->requestStack->getCurrentRequest();
+
+        if ($request && $this->scopeMatcher->isBackendRequest($request)) {
             /** @var BackendTemplate|object $objTemplate */
             $objTemplate = new BackendTemplate('be_wildcard');
             $objTemplate->wildcard = '### ' . Utf8::strtoupper($GLOBALS['TL_LANG']['FMD']['mailchimp_subscribe'][0]) . ' ###';

@@ -6,6 +6,7 @@ namespace Oneup\Contao\MailChimpBundle\Module;
 
 use Codefog\HasteBundle\Form\Form;
 use Contao\BackendTemplate;
+use Contao\CoreBundle\Routing\ScopeMatcher;
 use Contao\Environment;
 use Contao\Input;
 use Contao\Module;
@@ -15,6 +16,7 @@ use Oneup\Contao\MailChimpBundle\Model\MailChimpModel;
 use Oneup\MailChimp\Client;
 use Patchwork\Utf8;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 class ModuleUnsubscribe extends Module
 {
@@ -25,9 +27,22 @@ class ModuleUnsubscribe extends Module
     protected $objMailChimp;
     protected $mailChimpListId;
 
+    protected ScopeMatcher $scopeMatcher;
+    protected RequestStack $requestStack;
+
+    public function __construct($objModule, $strColumn = 'main')
+    {
+        $this->scopeMatcher = System::getContainer()->get('contao.routing.scope_matcher');
+        $this->requestStack = System::getContainer()->get('request_stack');
+
+        parent::__construct($objModule, $strColumn);
+    }
+
     public function generate(): string
     {
-        if (TL_MODE === 'BE') {
+        $request = $this->requestStack->getCurrentRequest();
+
+        if ($request && $this->scopeMatcher->isBackendRequest($request)) {
             /** @var BackendTemplate|object $objTemplate */
             $objTemplate = new BackendTemplate('be_wildcard');
             $objTemplate->wildcard = '### ' . Utf8::strtoupper($GLOBALS['TL_LANG']['FMD']['mailchimp_unsubscribe'][0]) . ' ###';
