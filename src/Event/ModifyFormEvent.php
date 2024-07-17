@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Oneup\Contao\MailChimpBundle\Event;
 
-use Contao\Module;
 use Codefog\HasteBundle\Form\Form;
+use Contao\Module;
 use Symfony\Contracts\EventDispatcher\Event;
 
 class ModifyFormEvent extends Event
