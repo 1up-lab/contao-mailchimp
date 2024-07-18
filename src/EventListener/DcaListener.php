@@ -102,7 +102,7 @@ class DcaListener
             $this->logger->log(
                 LogLevel::ERROR,
                 sprintf('There was an error with the MailChimp API: %s', $e->getMessage()),
-                ['contao' => new ContaoContext(__METHOD__, 'ERROR')]
+                ['contao' => new ContaoContext(__METHOD__, ContaoContext::ERROR)]
             );
 
             Controller::redirect('contao/main.php?act=error');
