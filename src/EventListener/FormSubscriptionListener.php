@@ -141,7 +141,7 @@ class FormSubscriptionListener
         $result = $api->subscribeToList($model->listId, $email, $mergeVars, (bool) $form->mailchimpOptIn, $interests);
 
         if ($result) {
-            $this->logger->log(LogLevel::INFO, sprintf('Successfully subscribed "%s" to Mailchimp list "%s".', $email, $model->listName), ['contao' => new ContaoContext(__METHOD__, TL_GENERAL)]);
+            $this->logger->log(LogLevel::INFO, sprintf('Successfully subscribed "%s" to Mailchimp list "%s".', $email, $model->listName), ['contao' => new ContaoContext(__METHOD__, ContaoContext::GENERAL)]);
         } else {
             $this->handleError(sprintf('Could not subscribe "%s" to Mailchimp list "%s".', $email, $model->listName), $api->getLastError());
         }
@@ -150,7 +150,7 @@ class FormSubscriptionListener
             $result = $api->addOrRemoveMemberTags($model->listId, $email, $memberTags);
 
             if ($result) {
-                $this->logger->log(LogLevel::INFO, sprintf('Successfully added/removed tags from "%s".', $email), ['contao' => new ContaoContext(__METHOD__, TL_GENERAL)]);
+                $this->logger->log(LogLevel::INFO, sprintf('Successfully added/removed tags from "%s".', $email), ['contao' => new ContaoContext(__METHOD__, ContaoContext::GENERAL)]);
             } else {
                 $this->handleError(sprintf('Could not modify tags for "%s".', $email), $api->getLastError());
             }
@@ -167,6 +167,6 @@ class FormSubscriptionListener
             $message .= ' ' . implode(': ', (array) $error) . '.';
         }
 
-        $this->logger->log(LogLevel::INFO, $message, ['contao' => new ContaoContext(__METHOD__, TL_ERROR)]);
+        $this->logger->log(LogLevel::INFO, $message, ['contao' => new ContaoContext(__METHOD__, ContaoContext::ERROR)]);
     }
 }
