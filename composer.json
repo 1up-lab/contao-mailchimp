@@ -26,7 +26,7 @@
         "contao/core-bundle": "^4.13 || ^5.0",
         "oneup/mailchimp-api-v3": "^2.7",
         "patchwork/utf8": "^1.3",
-        "symfony/event-dispatcher": "^4.4 || ^5.4 || ^6.4"
+        "symfony/event-dispatcher": "^4.4 || ^5.4 || ^6.4 || ^7.0"
     },
     "require-dev": {
         "contao/manager-plugin": "^2.0",
