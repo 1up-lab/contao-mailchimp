@@ -129,7 +129,7 @@ class ModuleSubscribe extends Module
         }
 
         if ($this->mailchimpCaptcha) {
-            $objForm->addCaptchaFormField();
+            $objForm->addCaptchaFormField('subscribe-' . $this->id);
         }
 
         $objForm->addFormField('submit', [

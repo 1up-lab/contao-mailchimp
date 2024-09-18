@@ -82,7 +82,7 @@ class ModuleUnsubscribe extends Module
         ]);
 
         if ($this->mailchimpCaptcha) {
-            $objForm->addCaptchaFormField();
+            $objForm->addCaptchaFormField('unsubscribe-' . $this->id);
         }
 
         $objForm->addFormField('submit', [
