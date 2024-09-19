@@ -45,10 +45,12 @@ Go to Layout > Themes > Modules:
 - Choose the redirection page after subscription (Page: Subscribe to the newsletter)
 - Choose whether you will use double opt-in for subscription
 - Choose whether you will use the HTML5-Placeholder in the form fields or not
+- Choose whether you will have the Contao captcha field 
 - Add a module of the type **Unsubscribe form**
 - Choose your MailChimp List
 - Choose the redirection page after unsubscription (Unsubscribe from the newsletter)
 - Choose whether you will use the HTML5-Placeholder in the form fields or not
+- Choose whether you will have the Contao captcha field
 
 Go to Content > Articles:
 
@@ -67,3 +69,6 @@ You can also use forms of the form generator to subscribe to Mailchimp lists.
 - Optionally enable Mailchimp's double opt-in feature.
 - Define the merge tags to map the form's input to the mailchimp list's fields. _Note:_ you always need an `EMAIL` merge tag.
 - Define optional added member tags.
+
+### Known limitations
+- If the captcha option is activated and the same module is multiple times visible on the website, it won't work properly. E.g. if you have a subscription form in the footer and the same module somewhere in the content - it won't work. You'll have to have a different module for the footer then.
