@@ -15,4 +15,4 @@ $GLOBALS['TL_LANG']['tl_module']['mailchimp']['placeholderEmail'] = 'E-Mail';
 $GLOBALS['TL_LANG']['tl_module']['mailchimp']['labelSubmit'] = 'Submit';
 $GLOBALS['TL_LANG']['tl_module']['mailchimp']['subscribeError'] = 'An error occured during the subscription. Are you already subscribed?';
 $GLOBALS['TL_LANG']['tl_module']['mailchimp']['unsubscribeError'] = 'An error occured during the unsubscription. Are you already unsubscribed?';
-
+$GLOBALS['TL_LANG']['tl_module']['mailchimpCaptcha'] = ['Activate security question', 'Add a security question to the form (CAPTCHA).'];

@@ -64,6 +64,7 @@ class ModuleUnsubscribe extends Module
         $objForm = new Form('mailchimp-unsubscribe-' . $this->id, 'POST', fn (Form $objHaste) => Input::post('FORM_SUBMIT') === $objHaste->getFormId());
 
         $objForm->setAction(Environment::get('request'));
+        $objForm->addContaoHiddenFields();
 
         $eval = [
             'mandatory' => true,
@@ -80,12 +81,14 @@ class ModuleUnsubscribe extends Module
             'eval' => $eval,
         ]);
 
+        if ($this->mailchimpCaptcha) {
+            $objForm->addCaptchaFormField('unsubscribe-' . $this->id);
+        }
+
         $objForm->addFormField('submit', [
             'label' => $GLOBALS['TL_LANG']['tl_module']['mailchimp']['labelSubmit'],
             'inputType' => 'submit',
         ]);
-
-        $objForm->addContaoHiddenFields();
 
         // event: modify form
         /** @var EventDispatcherInterface $eventDispatcher */
